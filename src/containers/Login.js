@@ -1,9 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { login } from '../actions'
-import { push } from 'react-router-redux'
+//import { login } from '../actions'
+import { fetchLogin } from '../actions'
 
-let Login = ({dispatch}) => {
+const mapStateToProps = (state, ownProps) => {
+  return {
+	  err: state.login.err,
+		isFetching: state.login.isFetching
+	}
+}
+
+let Login = ({dispatch, err}) => {
   let username,password;
 	return (
 	  <div>
@@ -13,10 +20,7 @@ let Login = ({dispatch}) => {
 				if(!username.value.trim() || !password.value.trim()){
 				  return;
 				}
-        dispatch(login([
-				 username.value, password.value		
-				]))
-				dispatch(push('/app/addGroup'))
+        dispatch(fetchLogin(username.value, password.value));
 				username.value='';
 				password.value='';
 			}}>
@@ -26,10 +30,11 @@ let Login = ({dispatch}) => {
 			    login
 			  </button>
 			</form>
+			<h3> { (err?'invalid user':'') } </h3>
     </div>		
 	)
 } 
 
-Login = connect()(Login)
+Login = connect(mapStateToProps)(Login)
 
 export default Login

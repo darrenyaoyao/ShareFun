@@ -2,12 +2,15 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const api = require('./api');
+const bodyParser = require('body-parser');
 
 const app = express();
 
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 app.use('/api', api);
 app.use('*', (req, res) => {
