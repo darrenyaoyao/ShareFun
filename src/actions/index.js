@@ -15,9 +15,10 @@ export const addFriend = (text) => {
 	}
 }
 
-export const requestLogin = () => {
+export const requestLogin = (username) => {
   return {
-	  type: 'REQUEST_LOGIN'
+	  type: 'REQUEST_LOGIN',
+		username: username
 	}
 }
 
@@ -30,7 +31,7 @@ export const receiveLogin = (json) => {
 
 export const fetchLogin = (username, password) => {
   return dispatch => {
-	  dispatch(requestLogin());
+	  dispatch(requestLogin(username));
 		return fetch('/api/login',{
 		  method: 'POST',
 			headers: {

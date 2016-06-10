@@ -35,7 +35,7 @@ export default class App extends Component {
 			   <nav className="navbar navbar-inverse"> 
 				    <div className="navbar-left"><AddFriend/></div>
 						<Link className="navbar-brand navbar-right" to="/Login"> Log out </Link>
-					  <a className="navbar-brand navbar-right"> {user}  </a>
+					  <a className="navbar-brand navbar-right"> {username}  </a>
 				 </nav> 
 				 <ul className="list-group col-md-2">
 				   <li className="list-group-item"> 

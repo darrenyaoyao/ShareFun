@@ -7,7 +7,7 @@ const mapStateToProps = (state, ownProps) => {
     friendList: state.friendList,
 		groupList: state.groupList,
 	  display: state.display,
-	  login: state.login	
+	  username: state.login.username	
 	}
 }
 

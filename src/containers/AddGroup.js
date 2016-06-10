@@ -1,11 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addGroup } from '../actions'
+import { addGroup, 
+	       addGroupFriend, 
+				 resetGroupFriends 
+       } from '../actions'
 
-let AddGroup = ({dispatch}) => {
+const mapStateToProps = (state, ownProps) => {
+  return {
+	  groupFriends: state.groupFriends
+	}
+}
+
+let AddGroup = ({dispatch, groupFriends}) => {
 	let groupName;
 	let friendName;
-	let friendsInGroup = [];
   return (
 	  <div>
 		  <h2> Create Group </h2>
@@ -16,11 +24,9 @@ let AddGroup = ({dispatch}) => {
 				}
 				dispatch(addGroup({
 				  name: groupName.value,
-					friends: friendsInGroup
+					friends: groupFriends
 				}));
-				console.log(friendsInGroup);
-				React.forceUpdate();
-				friendsInGroup = [];
+				dispatch(resetGroupFriends())
 				groupName.value = '';
 			}}>
 		    groupName: <input ref={node=>{groupName=node}}/>
@@ -31,19 +37,19 @@ let AddGroup = ({dispatch}) => {
         if(!friendName.value.trim()){
 				  return;
 				}
-				friendsInGroup.push(friendName.value);
+				dispatch(addGroupFriend(friendName.value))
 				friendName.value='';
 			}}>
 			  friend: <input ref={node=>{friendName=node}}/>
 			  <button type="submit"> add Friend </button>
 			</form>
-			<ul>{friendsInGroup.map(function(x){
+			<ul>{groupFriends.map(function(x){
 			   return <li> {x} </li>
 	    })}</ul>
 		</div>
 	)
 }
 
-AddGroup = connect()(AddGroup)
+AddGroup = connect(mapStateToProps)(AddGroup)
 
 export default AddGroup

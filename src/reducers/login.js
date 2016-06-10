@@ -5,7 +5,8 @@ const login = (state = {
   switch(action.type) {
 	  case 'REQUEST_LOGIN':
 			return Object.assign({}, state, {
-				isFetching: true
+				isFetching: true,
+			  username: action.username
 			});
 		case 'RECEIVE_LOGIN':
       return Object.assign({}, state, {
