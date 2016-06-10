@@ -4,6 +4,7 @@ import { addGroup,
 	       addGroupFriend, 
 				 resetGroupFriends 
        } from '../actions'
+import './AddGroup.css'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -15,8 +16,7 @@ let AddGroup = ({dispatch, groupFriends}) => {
 	let groupName;
 	let friendName;
   return (
-	  <div>
-		  <h2> Create Group </h2>
+	  <div className="main-block">
 		  <form onSubmit={ e=>{
 		    e.preventDefault();	
 				if(!groupName.value.trim()){
@@ -29,8 +29,8 @@ let AddGroup = ({dispatch, groupFriends}) => {
 				dispatch(resetGroupFriends())
 				groupName.value = '';
 			}}>
+			  <button type="submit" className="btn btn-lg btn-link"> Create Group </button> <br/>
 		    groupName: <input ref={node=>{groupName=node}}/>
-			  <button type="submit"> add Group </button>
 			</form>
 			<form onSubmit={e=>{
 			  e.preventDefault();
