@@ -15,7 +15,7 @@ const mapStateToProps = (state, ownProps) => {
 let DebtList = ({dispatch, debtList, groupFriends, newDebt, username}) => {
 	let debtName, debtor, money;
   return(
-	  <div>
+	  <div className ="display-debt">
 		  <form onSubmit={ e=>{
 			  e.preventDefault();
 				dispatch(fetchAddDebt('testName','testGroup',{

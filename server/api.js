@@ -10,7 +10,6 @@ router.post('/login', function(req, res){
 
 router.post('/addDebt', function(req, res){
 	// code for discussion with db
-	console.log(req.body);
   res.json({success: true})
 })
 
