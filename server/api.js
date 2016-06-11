@@ -1,16 +1,28 @@
 const Router = require('express').Router;
 const fs = require('fs');
 const router = new Router();
+const DB = require("./database");
 
 router.post('/login', function(req, res){
   // code for discussion with db
-	// fail if no such user
-	res.json({success: true})
+   DB.user.findOne({
+      where: {username: req.body.username}
+   }).then(function(user){
+      if(user.password == req.body.password)
+         res.json({success: true});
+      //else password wrong
+   }).catch(function(err){
+      res.json({success: false});
+      DB.user.create({
+         username: req.body.username,
+         password: req.body.password
+      });
+   });
 })
 
 router.post('/addDebt', function(req, res){
 	// code for discussion with db
-  res.json({success: true})
+  res.json({success: true});
 })
 
 module.exports = router;
