@@ -4,13 +4,17 @@ import friendList from './friendList'
 import login from './login'
 import groupList from './groupList'
 import groupFriends from './groupFriends'
+import debtList from './debtList'
+import newDebt from './newDebt'
 
 const app = combineReducers({
   display,
 	friendList,
 	login,
 	groupList,
-	groupFriends
+	groupFriends,
+	debtList,
+	newDebt
 })
 
 export default app

@@ -32,7 +32,7 @@ module.exports = {
     },{
 		  test: /\.css$/,
 			loaders: ['style', 'css'],
-      include: path.join(__dirname, 'src', 'components')
+      include: path.join(__dirname, 'src')
 		}],
   },
 };
