@@ -13,4 +13,9 @@ router.post('/addDebt', function(req, res){
   res.json({success: true})
 })
 
+router.post('/addGroup', function(req, res){
+	// code for discussion with db
+	res.json({success: true})
+})
+
 module.exports = router;

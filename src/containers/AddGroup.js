@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addGroup, 
+import { fetchAddGroup, 
 	       addGroupFriend, 
 				 resetGroupFriends 
        } from '../actions'
@@ -8,11 +8,12 @@ import './AddGroup.css'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-	  groupFriends: state.groupFriends
+	  groupFriends: state.groupFriends,
+		username: state.login.username
 	}
 }
 
-let AddGroup = ({dispatch, groupFriends}) => {
+let AddGroup = ({dispatch, groupFriends, username}) => {
 	let groupName;
 	let friendName;
   return (
@@ -22,10 +23,7 @@ let AddGroup = ({dispatch, groupFriends}) => {
 				if(!groupName.value.trim()){
 				  return;
 				}
-				dispatch(addGroup({
-				  name: groupName.value,
-					friends: groupFriends
-				}));
+				dispatch(fetchAddGroup(username, groupName.value, [...groupFriends, username]));
 				dispatch(resetGroupFriends())
 				groupName.value = '';
 			}}>

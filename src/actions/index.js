@@ -74,6 +74,42 @@ export const resetGroupFriends = () => {
 	}
 }
 
+export const requestAddGroup = () => {
+  return {
+	  type: 'REQUEST_ADD_GROUP'
+	}
+}
+
+export const receiveAddGroup = (json,groupName,groupFriends) => {
+  return {
+	  type: 'RECEIVE_ADD_GROUP',
+		groupInfo: {groupName, groupFriends},
+    err: !json.success
+	}
+}
+
+export const fetchAddGroup = (username,groupName,groupFriends) => {
+  return dispatch => {
+	  dispatch(requestAddGroup());
+		return fetch('/api/addGroup', {
+		  method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				username,
+			  groupName,
+			  groupFriends
+			})
+		})
+		 .then(res => res.json())
+		 .then(json => {
+		   dispatch(receiveAddGroup(json, groupName, groupFriends))
+		 })
+	} 
+}
+
 export const requestAddDebt = () => {
   return {
 	  type: 'REQUEST_ADD_DEBT',
