@@ -20,6 +20,16 @@ router.post('/login', function(req, res){
    });
 })
 
+router.post('/addFriend', function(req, res){
+   // code for discussion with db
+   console.log(req.body)
+   DB.friendlink.create({
+      user_1: req.body.username,
+      user_2: req.body.friendName
+   });
+  res.json({success: true});
+})
+
 router.post('/addDebt', function(req, res){
 	// code for discussion with db
   res.json({success: true});

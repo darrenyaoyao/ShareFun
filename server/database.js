@@ -23,6 +23,11 @@ var User = sequelize.define('user', {
   }
 });
 
+var FriendLink = sequelize.define('friendlink');
+
+FriendLink.belongsTo(User, {foreignKey: 'user_1'})
+FriendLink.belongsTo(User, {foreignKey: 'user_2'})
+
 User.sync().then(function () {
   // Table created
   console.log("Create user table successfully.")
@@ -31,6 +36,15 @@ User.sync().then(function () {
    console.log(err)
 });
 
+FriendLink.sync().then(function () {
+  // Table created
+  console.log("Create friendlink table successfully.")
+}).catch(function(err){
+   console.log("Create friendlink table fail: ");
+   console.log(err)
+});
+
 module.exports = {sequelize: sequelize,
-                  user: User
+                  user: User,
+                  friendlink: FriendLink
                   };
