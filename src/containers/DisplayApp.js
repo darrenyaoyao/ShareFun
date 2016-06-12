@@ -5,7 +5,7 @@ import App from '../components/App'
 const mapStateToProps = (state, ownProps) => {
   return {
     friendList: state.friendList,
-		groupList: state.groupList,
+		groupList: state.groupList.list,
 	  display: state.display,
 	  username: state.login.username	
 	}

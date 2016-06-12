@@ -19,9 +19,9 @@ export default class App extends Component {
 	}
 	mapToGroup(groupObj){
 	  return (
-			<li key={groupObj.name} className="list-group-item indent2"> 
-			  <Link to={"/app/group/"+groupObj.name}>
-				  {groupObj.name}
+			<li key={groupObj.groupName} className="list-group-item indent2"> 
+			  <Link to={"/app/group/"+groupObj.groupName}>
+				  {groupObj.groupName}
 			 	</Link>
 			</li>
 		)
