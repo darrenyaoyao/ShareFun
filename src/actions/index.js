@@ -54,13 +54,6 @@ export const fetchLogin = (username, password) => {
 }
 
 // info = {groupName,friendList}
-export const addGroup = (info) => {
-  return {
-	  type: 'ADD_GROUP',
-		info
-	}
-}
-
 export const addGroupFriend = (text) => {
   return {
 	  type: 'ADD_GROUP_FRIEND', 
@@ -108,6 +101,36 @@ export const fetchAddGroup = (username,groupName,groupFriends) => {
 		   dispatch(receiveAddGroup(json, groupName, groupFriends))
 		 })
 	} 
+}
+
+export const requestGetGroupList = () => {
+  return {
+	  type: 'REQUEST_GET_GROUP_LIST',
+	}
+}
+
+export const receiveGetGroupList = (groupList) => {
+  return {
+    type: 'RECEIVE_GET_GROUP_LIST',
+		groupList: groupList
+	}
+}
+
+export const fetchGetGroupList = (username) => {
+  return dispatch => {
+    dispatch(requestGetGroupList());
+	  return fetch(`/api/getGroupList/${username}`,{
+			method: 'GET',
+		  headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+			}
+		  })	
+			.then(res => res.json())
+			.then(json => {
+			  dispatch(receiveGetGroupList(json.groupList))
+			})
+	}
 }
 
 export const requestAddDebt = () => {

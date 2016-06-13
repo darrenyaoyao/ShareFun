@@ -3,10 +3,6 @@ import {Link} from 'react-router'
 import './App.css'
 import AddFriend from '../containers/AddFriend'
 
-// temporary data for viewing
-const user = 'Albert';
-// end
-
 export default class App extends Component {
 	mapToFriend(friendObj){
 	  return (
@@ -25,6 +21,9 @@ export default class App extends Component {
 			 	</Link>
 			</li>
 		)
+	}
+	componentWillMount(){
+    this.props.fetchGetGroupList(this.props.username);	
 	}
   render(){
 		const { username, friendList, groupList, 

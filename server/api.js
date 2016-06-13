@@ -43,4 +43,8 @@ router.post('/addGroup', function(req, res){
 	res.json({success: true})
 })
 
+router.get('/getGroupList/:username', function(req, res){
+  res.json({groupList:[{groupName: 'testGroup', groupFriends: ['f1', 'f2'] }]})
+})
+
 module.exports = router;
