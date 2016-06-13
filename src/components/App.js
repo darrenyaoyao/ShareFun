@@ -14,7 +14,7 @@ export default class App extends Component {
 			  <button className="btn btn-link">
 			    {friendObj} 
 			  </button>
-			</li>
+		  </li>
 		)
 	}
 	mapToGroup(groupObj){
@@ -33,21 +33,21 @@ export default class App extends Component {
 	  return (
 		  <div>
 			   <nav className="navbar navbar-inverse"> 
-				    <div className="navbar-left"><AddFriend/></div>
-						<Link className="navbar-brand navbar-right" to="/Login"> Log out </Link>
-					  <a className="navbar-brand navbar-right"> {username}  </a>
-				 </nav> 
-				 <ul className="list-group col-md-2">
+				   <div className="navbar-left"><AddFriend/></div>
+					<Link className="navbar-brand navbar-right" to="/Login"> Log out </Link>
+					<a className="navbar-brand navbar-right"> {username}  </a>
+				</nav> 
+				<ul className="list-group col-md-2">
 				   <li className="list-group-item"> 
 					   <button className='btn btn-link' onClick={clickFList}> friendList </button>
-					 </li>
-					 {friendList.map(this.mapToFriend)}
-					 <li className="list-group-item"> 
+					</li>
+					{friendList.map(this.mapToFriend)}
+					<li className="list-group-item"> 
 					   <button className='btn btn-link' onClick={clickGList}> groupList  </button>
-					 </li>
-					 {groupList.map(this.mapToGroup)}
-				 </ul>
-				 {this.props.children}
+					</li>
+					{groupList.map(this.mapToGroup)}
+				</ul>
+				{this.props.children}
 			</div>
 	  );
 	}

@@ -12,9 +12,10 @@ router.post('/login', function(req, res){
    }).then(function(user){
       if(user.password == req.body.password)
          res.json({success: true});
-      //else password wrong
+      else 
+         res.json({success: false});
    }).catch(function(err){
-      res.json({success: false});
+      res.json({success: true});
       Users.create({
          username: req.body.username,
          password: req.body.password
