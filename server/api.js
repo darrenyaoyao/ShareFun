@@ -1,7 +1,6 @@
 const Router = require('express').Router;
 const fs = require('fs');
 const router = new Router();
-const DB = require("./database");
 const Users = require("./database/Users");
 const Friendlinks = require("./database/Friendlinks");
 

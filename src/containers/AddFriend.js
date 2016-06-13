@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addFriend } from '../actions'
+import { fetchAddFriend } from '../actions'
 
-let AddFriend = ({dispatch}) => {
+let AddFriend = ({dispatch, username}) => {
   let input;
 	return (
 		<div>
@@ -11,7 +11,7 @@ let AddFriend = ({dispatch}) => {
 				if(!input.value.trim()){
 					return;
 				}
-				dispatch(addFriend(input.value));
+				dispatch(fetchAddFriend(username, input.value));
 		    input.value = '';
 			}}>
 

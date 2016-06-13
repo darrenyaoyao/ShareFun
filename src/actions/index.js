@@ -8,13 +8,45 @@ export const setDisplay = (text) => {
 	}
 }
 
-export const addFriend = (text) => {
+
+//AddFriend
+export const requestAddFriend = (friendname) => {
   return {
-	  type: 'ADD_FRIEND',
-		text
-	}
+     type: 'REQUEST_ADD_FRIEND',
+      friendname: friendname
+   }
 }
 
+export const receiveAddFriend = (json, friendname) => {
+  return {
+     type: 'RECEIVE_ADD_FRIEND',
+     friendname: friendname,
+      err: !json.success
+   }
+}
+
+export const fetchAddFriend = (username, friendname) => {
+   return dispatch => {
+      dispatch(requestAddFriend(friendname));
+      return fetch('/api/addfriend',{
+        method: 'POST',
+         headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({
+            username,
+            friendname
+         })
+      })
+         .then(res => res.json())
+         .then(json => {
+            dispatch(receiveLogin(json, friendname));
+         })
+   }
+}
+
+//Login
 export const requestLogin = (username) => {
   return {
 	  type: 'REQUEST_LOGIN',
@@ -83,8 +115,8 @@ export const requestAddGroup = () => {
 export const receiveAddGroup = (json,groupName,groupFriends) => {
   return {
 	  type: 'RECEIVE_ADD_GROUP',
-		groupInfo: {groupName, groupFriends},
-    err: !json.success
+	  groupInfo: {groupName, groupFriends},
+      err: !json.success
 	}
 }
 
