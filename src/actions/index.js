@@ -1,6 +1,4 @@
-export const setDisplay = (text) => {
-  return {
-	  type: 'SET_DISPLAY',
-		text
-	}
-}
+export const setDisplay = (text) => ({
+  type: 'SET_DISPLAY',
+  text,
+});

@@ -1,12 +1,8 @@
-export const addDebtor = (newDebtor) => {
-  return {
-	  type: 'ADD_DEBTOR',
-		payload: newDebtor
-	}
-}
+export const addDebtor = (newDebtor) => ({
+  type: 'ADD_DEBTOR',
+  payload: newDebtor,
+});
 
-export const resetNewDebt = () => {
-  return {
-	  type: 'RESET_NEW_DEBT'
-	}
-}
+export const resetNewDebt = () => ({
+  type: 'RESET_NEW_DEBT',
+});

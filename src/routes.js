@@ -7,11 +7,11 @@ import AddGroup from './containers/AddGroup';
 
 export default (
   <Route path="/">
-	   <IndexRedirect to = "/login" />
-		 <Route path = "/login" component={Login} />
-		 <Route path = "/app" component={DisplayApp}>
-		 <Route path = "/app/addGroup" component={AddGroup} />
-		   <Route path = "/app/group/:groupName" component={Group} />
-		 </Route>
+    <IndexRedirect to="/login" />
+    <Route path="/login" component={Login} />
+    <Route path="/app" component={DisplayApp}>
+      <Route path="/app/addGroup" component={AddGroup} />
+      <Route path="/app/group/:groupName" component={Group} />
+    </Route>
   </Route>
 );

@@ -29,10 +29,10 @@ module.exports = {
       test: /\.js$/,
       loaders: ['babel'],
       exclude: /node_modules/,
-    },{
-		  test: /\.css$/,
-			loaders: ['style', 'css'],
-      include: path.join(__dirname, 'src')
-		}],
+    }, {
+      test: /\.css$/,
+      loaders: ['style', 'css'],
+      include: path.join(__dirname, 'src'),
+    }],
   },
 };
