@@ -10,7 +10,7 @@ export const receiveAddDebt = (json, debt) => {
   return {
 	  type: 'RECEIVE_ADD_DEBT',
 		err: !json.success,
-		debt: debt
+		payload: debt
 	}
 }
 

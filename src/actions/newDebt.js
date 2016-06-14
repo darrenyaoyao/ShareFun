@@ -1,7 +1,7 @@
 export const addDebtor = (newDebtor) => {
   return {
 	  type: 'ADD_DEBTOR',
-		newDebtor: newDebtor
+		payload: newDebtor
 	}
 }
 

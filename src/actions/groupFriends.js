@@ -1,7 +1,7 @@
-export const addGroupFriend = (text) => {
+export const addGroupFriend = (groupFriend) => {
   return {
 	  type: 'ADD_GROUP_FRIEND', 
-		text
+		payload: groupFriend
 	}
 }
 

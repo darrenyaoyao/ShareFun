@@ -12,7 +12,7 @@ const debtList = (state = {
 			return Object.assign({}, state, {
 		    isFetching: false,	
 				err: action.err,
-				list: [...state.list, action.debt]
+				list: [...state.list, action.payload]
 			
 			});
 		default:

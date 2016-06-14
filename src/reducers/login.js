@@ -6,7 +6,7 @@ const login = (state = {
 	  case 'REQUEST_LOGIN':
 			return Object.assign({}, state, {
 				isFetching: true,
-			  username: action.username
+			  username: action.payload
 			});
 		case 'RECEIVE_LOGIN':
       return Object.assign({}, state, {

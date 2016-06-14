@@ -1,7 +1,7 @@
 const newDebt = (state = [], action) => {
   switch(action.type){
 		case 'ADD_DEBTOR':
-			return [...state, action.newDebtor]
+			return [...state, action.payload]
 		case 'RESET_NEW_DEBT':
 			return [];
 		default:

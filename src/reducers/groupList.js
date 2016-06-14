@@ -13,7 +13,7 @@ const groupList = (state = {
 			return Object.assign({}, state, {
 			  isFetchingAdd: false,
 				err: action.err,
-				list: [...state.list, action.groupInfo]
+				list: [...state.list, action.payload]
 			});
 		case 'REQUEST_GET_GROUP_LIST':
 			return Object.assign({}, state, {
@@ -22,7 +22,7 @@ const groupList = (state = {
 		case 'RECEIVE_GET_GROUP_LIST':
 			return Object.assign({}, state, {
 			  isFetchingGet: false,
-				list: action.groupList
+				list: action.payload
 			});
 		default:
 			return state;

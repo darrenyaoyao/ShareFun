@@ -9,7 +9,7 @@ export const requestAddGroup = () => {
 export const receiveAddGroup = (json,groupName,groupFriends) => {
   return {
 	  type: 'RECEIVE_ADD_GROUP',
-		groupInfo: {groupName, groupFriends},
+		payload: {groupName, groupFriends},
     err: !json.success
 	}
 }
@@ -45,7 +45,7 @@ export const requestGetGroupList = () => {
 export const receiveGetGroupList = (groupList) => {
   return {
     type: 'RECEIVE_GET_GROUP_LIST',
-		groupList: groupList
+		payload: groupList
 	}
 }
 

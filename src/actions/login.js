@@ -4,7 +4,7 @@ import { push } from 'react-router-redux'
 export const requestLogin = (username) => {
   return {
 	  type: 'REQUEST_LOGIN',
-		username: username
+		payload: username
 	}
 }
 
