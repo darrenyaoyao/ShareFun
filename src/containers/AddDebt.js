@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {fetchAddDebt, addDebtor, resetNewDebt} from '../actions'
+import { addDebtor, resetNewDebt } from '../actions/newDebt'
+import { fetchAddDebt } from '../actions/debtList'
 import './AddDebt.css'
 
 const mapStateToProps = (state, ownProps) => {

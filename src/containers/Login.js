@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchLogin } from '../actions'
+import { fetchLogin } from '../actions/login'
 
 const mapStateToProps = (state, ownProps) => {
   return {

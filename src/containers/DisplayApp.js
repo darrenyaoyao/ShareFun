@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
-import { setDisplay, addFriend, fetchGetGroupList} from '../actions'
+import { setDisplay } from '../actions/index'
+import { addFriend } from '../actions/friendList'
+import { fetchGetGroupList } from '../actions/groupList'
 import App from '../components/App'
 
 const mapStateToProps = (state, ownProps) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addFriend } from '../actions'
+import { addFriend } from '../actions/friendList'
 
 let AddFriend = ({dispatch}) => {
   let input;

@@ -1,9 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchAddGroup, 
-	       addGroupFriend, 
-				 resetGroupFriends 
-       } from '../actions'
+import { fetchAddGroup } from '../actions/groupList'
+import { addGroupFriend, resetGroupFriends } from '../actions/groupFriends'
 import './AddGroup.css'
 
 const mapStateToProps = (state, ownProps) => {
