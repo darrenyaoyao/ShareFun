@@ -25,11 +25,18 @@ router.post('/login', function(req, res){
 
 router.post('/addFriend', function(req, res){
    // code for discussion with db
-   console.log(req.body)
-   Friendlinks.create({
+    console.log(req.body)
+    Friendlinks.create({
       user_1: req.body.username,
       user_2: req.body.friendName
-   });
+    }).then(function(friendlink){
+      Users.findOne({
+        where: {username: req.body.username}
+      }).then(function(user){
+        user.addFriendLink(friendlink);
+      });
+    });
+
   res.json({success: true});
 })
 
