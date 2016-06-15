@@ -3,16 +3,11 @@ const sequelize = require("../database");
 const User = require("./Users")
 
 var FriendLink = sequelize.define('friendlink', {
-   user1: {
-      type: Sequelize.STRING,
-   },
-   password: {
-      type: Sequelize.STRING,
-   }
+   user_1: Sequelize.STRING,
+   user_2: Sequelize.STRING,
 });
 
-FriendLink.belongsTo(User, {foreignKey: 'user_1', targetKey: 'user1'})
-FriendLink.belongsTo(User, {foreignKey: 'user_2', targetKey: 'user2'})
+User.hasMany(FriendLink, { foreignKey: 'user_1_id'})
 
 FriendLink.sync({force: true}).then(function () {
   // Table created

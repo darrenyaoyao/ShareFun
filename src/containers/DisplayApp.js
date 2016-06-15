@@ -1,6 +1,8 @@
-import { connect } from 'react-redux'
-import { setDisplay, addFriend } from '../actions'
-import App from '../components/App'
+import { connect } from 'react-redux';
+import { setDisplay } from '../actions/index';
+import { addFriend } from '../actions/friendList';
+import { fetchGetGroupList } from '../actions/groupList';
+import App from '../components/App';
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -11,23 +13,24 @@ const mapStateToProps = (state, ownProps) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-		clickFList: () => {
-		  dispatch(setDisplay('friendList'));
-		},
-		clickGList: () => {
-		  dispatch(setDisplay('groupList'));
-		},	
-    addFriend: (target) => {
-		  dispatch(addFriend(target));
-		}
-	}
-}
+const mapDispatchToProps = (dispatch) => ({
+  clickFList: () => {
+    dispatch(setDisplay('friendList'));
+  },
+  clickGList: () => {
+    dispatch(setDisplay('groupList'));
+  },
+  addFriend: (target) => {
+    dispatch(addFriend(target));
+  },
+  fetchGetGroupList: (username) => {
+    dispatch(fetchGetGroupList(username));
+  },
+});
 
 const DisplayApp = connect(
   mapStateToProps,
 	mapDispatchToProps
-)(App)
+)(App);
 
-export default DisplayApp
+export default DisplayApp;

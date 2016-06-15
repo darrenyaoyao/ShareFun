@@ -24,11 +24,18 @@ router.post('/login', function(req, res){
 
 router.post('/addFriend', function(req, res){
    // code for discussion with db
-   console.log(req.body)
-   Friendlinks.create({
-      user_1: req.body.username,
-      user_2: req.body.friendName
-   });
+    console.log(req.body)
+    Friendlinks.create({
+      user_1: 'yaoyao',
+      user_2: req.body.friendname
+    }).then(function(friendlink){
+      Users.findOne({
+        where: {username: 'yaoyao'}
+      }).then(function(user){
+        user.addFriendlink(friendlink);
+      });
+    });
+
   res.json({success: true});
 })
 
@@ -40,6 +47,10 @@ router.post('/addDebt', function(req, res){
 router.post('/addGroup', function(req, res){
 	// code for discussion with db
 	res.json({success: true})
+})
+
+router.get('/getGroupList/:username', function(req, res){
+  res.json({groupList:[{groupName: 'testGroup', groupFriends: ['f1', 'f2'] }]})
 })
 
 module.exports = router;

@@ -1,22 +1,32 @@
 const groupList = (state = {
-  isFetching: false,
+  isFetchingAdd: false,
+  isFetchingGet: false,
   list: [],
-  err: false	
+  err: false,
 }, action) => {
-  switch(action.type) {
-	  case 'REQUEST_ADD_GROUP':
-			return Object.assign({}, state, {
-			  isFetching: true,
-			});
-		case 'RECEIVE_ADD_GROUP':
-			return Object.assign({}, state, {
-			  isFetching: false,
-				err: action.err,
-				list: [...state.list, action.groupInfo]
-			});
-		default:
-			return state;
-	}
-}
+  switch (action.type) {
+    case 'REQUEST_ADD_GROUP':
+      return Object.assign({}, state, {
+        isFetchingAdd: true,
+      });
+    case 'RECEIVE_ADD_GROUP':
+      return Object.assign({}, state, {
+        isFetchingAdd: false,
+        err: action.err,
+        list: [...state.list, action.payload],
+      });
+    case 'REQUEST_GET_GROUP_LIST':
+      return Object.assign({}, state, {
+        isFetchingGet: true,
+      });
+    case 'RECEIVE_GET_GROUP_LIST':
+      return Object.assign({}, state, {
+        isFetchingGet: false,
+        list: action.payload,
+      });
+    default:
+      return state;
+  }
+};
 
-export default groupList
+export default groupList;

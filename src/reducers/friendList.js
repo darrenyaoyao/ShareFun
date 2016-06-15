@@ -19,4 +19,4 @@ const friendList = (state = {
 	}
 }
 
-export default friendList
+export default friendList;

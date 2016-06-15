@@ -1,21 +1,21 @@
 const login = (state = {
-	isFetching: false,
-  err: false
+  isFetching: false,
+  err: false,
 }, action) => {
-  switch(action.type) {
-	  case 'REQUEST_LOGIN':
-			return Object.assign({}, state, {
-				isFetching: true,
-			  username: action.username
-			});
-		case 'RECEIVE_LOGIN':
+  switch (action.type) {
+    case 'REQUEST_LOGIN':
       return Object.assign({}, state, {
-			  isFetching: false,
-				err: action.err
-			})
-		default:
-			return state;
-	}
-}
+        isFetching: true,
+        username: action.payload,
+      });
+    case 'RECEIVE_LOGIN':
+      return Object.assign({}, state, {
+        isFetching: false,
+        err: action.err,
+      });
+    default:
+      return state;
+  }
+};
 
-export default login
+export default login;
