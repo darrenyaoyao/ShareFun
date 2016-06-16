@@ -1,21 +1,20 @@
 const Sequelize = require('sequelize');
-const sequelize = require("../database");
+const sequelize = require('../database');
 
-var User = sequelize.define('user', {
+const User = sequelize.define('user', {
   username: {
     type: Sequelize.STRING,
   },
   password: {
-    type: Sequelize.STRING
-  }
+    type: Sequelize.STRING,
+  },
 });
 
-User.sync().then(function () {
+User.sync().then(() => {
   // Table created
-  console.log("Create user table successfully.")
-}).catch(function(err){
-   console.log("Create user table fail: ");
-   console.log(err)
+  console.log('Create user table successfully.');
+}).catch((err) => {
+  console.log('Create user table fail: ', err);
 });
 
 module.exports = User;

@@ -1,26 +1,26 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { fetchAddFriend } from '../actions/friendList'
+import React from 'react';
+import { connect } from 'react-redux';
+import { fetchAddFriend } from '../actions/friendList';
 
-const mapStateToProps = (state) => {
-  return {
-    username: state.username
-  }
-};
+const mapStateToProps = (state) => ({
+  username: state.username,
+});
 
-const AddFriend = ({dispatch, username}) => {
+const AddFriend = ({ dispatch, username }) => {
   let input;
-	return (
-		<div>
-      	<form onSubmit={ e=>{
-  			  e.preventDefault();
-  				if(!input.value.trim()){
-  					return;
-  				}
+  return (
+    <div>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          if (!input.value.trim()) {
+            return;
+          }
           console.log(username);
-  				dispatch(fetchAddFriend(username, input.value));
-  		    input.value = '';
-        }}>
+          dispatch(fetchAddFriend(username, input.value));
+          input.value = '';
+        }}
+      >
         <input ref={node => { input = node; }} />
         <button type="submit">
           Add Friend
