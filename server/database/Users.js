@@ -8,6 +8,14 @@ const User = sequelize.define('user', {
   password: {
     type: Sequelize.STRING,
   },
+}, {
+  classMethods: {
+    findOneuser: (username) => (
+      User.findOne({
+        where: { username },
+      })
+    ),
+  },
 });
 
 User.sync().then(() => {

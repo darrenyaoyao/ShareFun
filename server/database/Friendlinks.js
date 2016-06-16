@@ -9,7 +9,7 @@ const FriendLink = sequelize.define('friendlink', {
 
 User.hasMany(FriendLink, { foreignKey: 'user_1_id' });
 
-FriendLink.sync({ force: true }).then(() => {
+FriendLink.sync().then(() => {
   // Table created
   console.log('Create friendlink table successfully.');
 }).catch((err) => {

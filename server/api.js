@@ -5,16 +5,15 @@ const Friendlinks = require('./database/Friendlinks');
 
 router.post('/login', (req, res) => {
   // code for discussion with db
-  Users.findOne({
-    where: { username: req.body.username },
-  }).then((user) => {
+  Users.findOneuser(req.body.username)
+  .then((user) => {
     if (user.password === req.body.password) {
       res.json({ success: true });
     } else {
       res.json({ success: false });
     }
-  }).catch((err) => {
-    res.json({ success: true, error: err });
+  }).catch(() => {
+    res.json({ success: true });
     Users.create({
       username: req.body.username,
       password: req.body.password,
@@ -24,18 +23,28 @@ router.post('/login', (req, res) => {
 
 router.post('/addFriend', (req, res) => {
   // code for discussion with db
-  Friendlinks.create({
-    user_1: 'yaoyao',
-    user_2: req.body.friendname,
-  }).then((friendlink) => {
-    Users.findOne({
-      where: { username: 'yaoyao' },
-    }).then((user) => {
-      user.addFriendlink(friendlink);
-    });
-  });
+  Users.findOneuser(req.body.friendname)
+    .then((friend) => {
+      Friendlinks.create({
+        user_1: req.body.friendname,
+        user_2: req.body.username,
+      }).then((friendlink) => {
+        friend.addFriendlink(friendlink);
+      });
 
-  res.json({ success: true });
+      Friendlinks.create({
+        user_1: req.body.username,
+        user_2: req.body.friendname,
+      }).then((friendlink) => {
+        Users.findOneuser(req.body.username)
+        .then((user) => {
+          user.addFriendlink(friendlink);
+        });
+      });
+      res.json({ success: true });
+    }).catch(() => {
+      res.json({ success: false });
+    });
 });
 
 router.post('/addDebt', (req, res) => {
