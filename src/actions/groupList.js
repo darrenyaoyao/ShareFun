@@ -4,9 +4,9 @@ export const requestAddGroup = () => ({
   type: 'REQUEST_ADD_GROUP',
 });
 
-export const receiveAddGroup = (json, groupName, groupFriends) => ({
+export const receiveAddGroup = (json, groupName) => ({
   type: 'RECEIVE_ADD_GROUP',
-  payload: { groupName, groupFriends },
+  payload: groupName,
   err: !json.success,
 });
 
@@ -27,7 +27,7 @@ export const fetchAddGroup = function fetchAddGroup(username, groupName, groupFr
     })
      .then(res => res.json())
      .then(json => {
-       dispatch(receiveAddGroup(json, groupName, groupFriends));
+       dispatch(receiveAddGroup(json, groupName));
      });
   };
 };

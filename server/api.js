@@ -25,7 +25,6 @@ router.post('/login', function(req, res){
 
 router.post('/addFriend', function(req, res){
    // code for discussion with db
-   console.log(req.body)
    Friendlinks.create({
       user_1: req.body.username,
       user_2: req.body.friendName
@@ -40,11 +39,17 @@ router.post('/addDebt', function(req, res){
 
 router.post('/addGroup', function(req, res){
 	// code for discussion with db
+  console.log('debug for addGroup');
+  console.log(req.body);
+  console.log('---------------------');
 	res.json({success: true})
 })
 
 router.get('/getGroupList/:username', function(req, res){
-  res.json({groupList:[{groupName: 'testGroup', groupFriends: ['f1', 'f2'] }]})
+  res.json({groupList:['g1', 'g2']})
 })
 
+router.post('/getGroupFriends', function(req, res){
+  res.json({groupFriends:['f1, f2']});
+});
 module.exports = router;
