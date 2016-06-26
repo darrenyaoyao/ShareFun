@@ -64,4 +64,12 @@ router.get('/getGroupList/:username', (req, res) => {
 router.post('/getGroupFriends', (req, res) => {
   res.json({ groupFriends: ['f1', 'f2'] });
 });
+
+router.get('/getDebtList/:username&&:groupName', (req, res) => {
+  res.json({ debtList: [{
+    creditor: 'albert',
+    debtName: 'lunch',
+    debtorList: [{ debtor: 'Tom', money: 100 }],
+  }] });
+});
 module.exports = router;
