@@ -9,9 +9,10 @@ const mapStateToProps = (state) => ({
   debtList: state.debtList.list,
   newDebt: state.newDebt,
   username: state.username,
+  groupName: state.groupList.active,
 });
 
-const DebtList = ({ dispatch, debtList, newDebt, username }) => {
+const DebtList = ({ dispatch, debtList, newDebt, username, groupName }) => {
   let debtName;
   let debtor;
   let money;
@@ -20,7 +21,7 @@ const DebtList = ({ dispatch, debtList, newDebt, username }) => {
       <form
         onSubmit={e => {
           e.preventDefault();
-          dispatch(fetchAddDebt('testName', 'testGroup', {
+          dispatch(fetchAddDebt(username, groupName, {
             crditor: username,
             debtName: debtName.value,
             debtorList: newDebt,
@@ -86,6 +87,7 @@ DebtList.propTypes = {
   groupFriends: React.PropTypes.array,
   newDebt: React.PropTypes.array,
   username: React.PropTypes.string,
+  groupName: React.PropTypes.string,
 };
 
 const DebtListContainer = connect(mapStateToProps)(DebtList);

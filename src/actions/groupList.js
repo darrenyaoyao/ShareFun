@@ -58,3 +58,7 @@ export const fetchGetGroupList = function fetchGetGroupList(username) {
   };
 };
 
+export const ChangeActiveGroup = (groupName) => ({
+  type: 'CHANGE_ACTIVE_GROUP',
+  payload: groupName,
+});
