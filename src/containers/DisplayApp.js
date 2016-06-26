@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { setDisplay } from '../actions/index';
 import { addFriend } from '../actions/friendList';
 import { fetchGetGroupList } from '../actions/groupList';
+import { fetchGetGroupFriends } from '../actions/groupFriends';
 import App from '../components/App';
 
 const mapStateToProps = (state, ownProps) => {
@@ -17,8 +18,8 @@ const mapDispatchToProps = (dispatch) => ({
   clickFList: () => {
     dispatch(setDisplay('friendList'));
   },
-  clickGList: () => {
-    dispatch(setDisplay('groupList'));
+  clickGroup: (username, groupName) => {
+    dispatch(fetchGetGroupFriends(username, groupName));
   },
   addFriend: (target) => {
     dispatch(addFriend(target));

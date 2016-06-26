@@ -5,7 +5,7 @@ import { addGroupFriend, resetGroupFriends } from '../actions/groupFriends';
 import './AddGroup.css';
 
 const mapStateToProps = (state) => ({
-  groupFriends: state.groupFriends,
+  groupFriends: state.groupFriends.list,
   username: state.login.username,
 });
 

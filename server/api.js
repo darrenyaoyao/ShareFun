@@ -58,8 +58,10 @@ router.post('/addGroup', (req, res) => {
 });
 
 router.get('/getGroupList/:username', (req, res) => {
-  res.json({ groupList: [{ groupName: 'testGroup',
-                           groupFriends: ['f1', 'f2'] }] });
+  res.json({ groupList: ['g1', 'g2'] });
 });
 
+router.post('/getGroupFriends', (req, res) => {
+  res.json({ groupFriends: ['f1', 'f2'] });
+});
 module.exports = router;

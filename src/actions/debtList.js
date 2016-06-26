@@ -29,3 +29,4 @@ export const fetchAddDebt = function fetchAddDebt(username, groupName, debtConte
 			.then(json => { dispatch(receiveAddDebt(json, debtContent)); });
   };
 };
+

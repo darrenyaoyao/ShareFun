@@ -1,5 +1,6 @@
 const login = (state = {
   isFetching: false,
+  username: '',
   err: false,
 }, action) => {
   switch (action.type) {
