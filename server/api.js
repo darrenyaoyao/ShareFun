@@ -39,9 +39,6 @@ router.post('/addDebt', function(req, res){
 
 router.post('/addGroup', function(req, res){
 	// code for discussion with db
-  console.log('debug for addGroup');
-  console.log(req.body);
-  console.log('---------------------');
 	res.json({success: true})
 })
 
@@ -51,5 +48,14 @@ router.get('/getGroupList/:username', function(req, res){
 
 router.post('/getGroupFriends', function(req, res){
   res.json({groupFriends:['f1, f2']});
+});
+
+router.get('/getDebtList/:username&&:groupName', function(req, res){
+  console.log(req.params.username, req.params.groupName);
+  res.json({ debtList:[{
+    creditor: 'albert',
+    debtName: 'lunch',
+    debtorList: [{debtor: 'Tom', money: 100}]
+  }]});
 });
 module.exports = router;

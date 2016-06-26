@@ -30,3 +30,28 @@ export const fetchAddDebt = function fetchAddDebt(username, groupName, debtConte
   };
 };
 
+export const requestGetDebtList = () => ({
+  type: 'REQUEST_GET_DEBT_LIST',
+});
+
+export const receiveGetDebtList = (debtList) => ({
+  type: 'RECEIVE_GET_DEBT_LIST',
+  payload: debtList,
+});
+
+export const fetchGetDebtList = function fetchGetDebtList(username, groupName) {
+  return dispatch => {
+    dispatch(requestGetDebtList());
+    return fetch(`/api/getDebtList/${username}&&${groupName}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        dispatch(receiveGetDebtList(json.debtList));
+      });
+  };
+};
