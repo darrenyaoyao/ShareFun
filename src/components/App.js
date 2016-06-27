@@ -55,7 +55,7 @@ export default class App extends Component {
   }
   render() {
     const { username, friendList, groupList,
-            clickFList, clickRepay } = this.props;
+            clickFList, clickRepay, clickAddGroup } = this.props;
     const buttonstyle = {
       margin: 12,
     };
@@ -82,6 +82,7 @@ export default class App extends Component {
           <Row>
             <Col xs={3} sm={3} md={3} lg={3} className={appcss.side}>
               <List>
+                <FlatButton onClick={clickAddGroup} label="addGroup" /> <br />
                 <FlatButton onClick={clickRepay} label="Repayment" />
                 <Subheader onClick={clickFList}>FriendList</Subheader>
                   {friendList.map(this.mapToFriend)}
@@ -104,6 +105,7 @@ App.propTypes = {
   groupList: React.PropTypes.array,
   clickFList: React.PropTypes.func,
   clickGroup: React.PropTypes.func,
+  clickAddGroup: React.PropTypes.func,
   clickRepay: React.PropTypes.func,
   children: React.PropTypes.any,
   fetchGetGroupList: React.PropTypes.func,

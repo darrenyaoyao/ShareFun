@@ -21,6 +21,9 @@ const mapDispatchToProps = (dispatch) => ({
   clickRepay: () => {
     dispatch(push('/app/repay'));
   },
+  clickAddGroup: () => {
+    dispatch(push('/app/addGroup'));
+  },
   clickGroup: (username, groupName) => {
     dispatch(fetchGetGroupFriends(username, groupName));
     dispatch(fetchGetDebtList(username, groupName));
