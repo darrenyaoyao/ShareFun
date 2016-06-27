@@ -1,3 +1,4 @@
+/* eslint no-console: 0*/
 const Router = require('express').Router;
 const router = new Router();
 const Users = require('./database/Users').User;
@@ -46,6 +47,19 @@ router.post('/addFriend', (req, res) => {
       res.json({ success: true });
     }).catch(() => {
       res.json({ success: false });
+    });
+});
+
+router.get('/getFriendList/:username', (req, res) => {
+  console.log(req.params.username);
+  Users.findOneuser(req.params.username)
+    .then((user) => {
+      console.log('Find user');
+      user.getFriendlinks()
+      .then((friendlinks) => {
+        const friends = friendlinks.map(friendlink => friendlink.user_2);
+        res.json({ friendList: friends });
+      });
     });
 });
 
@@ -111,4 +125,59 @@ router.get('/getDebtList/:username&&:groupName', (req, res) => {
     debtorList: [{ debtor: 'Tom', money: 100 }],
   }] });
 });
+
+const fakeList1 = [
+  {
+    groupName: 'fakeGroup1',
+    debtorList: [
+      {
+        debtor: 'JR',
+        money: 100,
+      },
+      {
+        debtor: 'KD',
+        money: 200,
+      },
+    ],
+  },
+];
+
+router.post('/addRepay', (req, res) => {
+  console.log(req.body);
+  res.json({ repayList: fakeList1 });
+});
+
+const fakeList = [
+  {
+    groupName: 'fakeGroup1',
+    debtorList: [
+      {
+        debtor: 'JR',
+        money: 100,
+      },
+      {
+        debtor: 'KD',
+        money: 200,
+      },
+    ],
+  },
+  {
+    groupName: 'fakeGroup2',
+    debtorList: [
+      {
+        debtor: 'JR2',
+        money: -100,
+      },
+      {
+        debtor: 'KD2',
+        money: -200,
+      },
+    ],
+  },
+];
+
+router.get('/getRepayList/:username', (req, res) => {
+  res.json({ repayList: fakeList });
+});
+
 module.exports = router;

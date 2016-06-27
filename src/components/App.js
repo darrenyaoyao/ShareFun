@@ -1,3 +1,4 @@
+/* eslint react/jsx-no-bind: 0*/
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -14,8 +15,10 @@ import AddFriend from '../containers/AddFriend';
 export default class App extends Component {
   componentWillMount() {
     this.props.fetchGetGroupList(this.props.username);
+    this.props.fetchGetFriendList(this.props.username);
   }
   mapToFriend(friendObj) {
+    console.log(friendObj);
     return (
       /*
       <li key={friendObj} className="list-group-item indent1">
@@ -33,6 +36,7 @@ export default class App extends Component {
   }
   mapToGroup(groupName) {
     const { username, clickGroup } = this.props;
+    console.log(groupName);
     return (
       /*
       <li key={groupName} className="list-group-item indent2">
@@ -54,7 +58,7 @@ export default class App extends Component {
   }
   render() {
     const { username, friendList, groupList,
-            clickFList } = this.props;
+            clickFList, clickRepay, clickAddGroup } = this.props;
     const buttonstyle = {
       margin: 12,
     };
@@ -81,8 +85,10 @@ export default class App extends Component {
           <Row>
             <Col xs={3} sm={3} md={3} lg={3} className={appcss.side}>
               <List>
-                <Subheader onClick={clickFList}>FriendList</Subheader>
-                  {friendList.map(this.mapToFriend)}
+                <FlatButton onClick={clickAddGroup} label="addGroup" /> <br />
+                <FlatButton onClick={clickRepay} label="Repayment" />
+                <Subheader>FriendList</Subheader>
+                  {friendList.map(this.mapToFriend.bind(this))}
                 <Divider />
                 <Subheader> GroupList </Subheader>
                   {groupList.map(this.mapToGroup.bind(this))}
@@ -102,6 +108,9 @@ App.propTypes = {
   groupList: React.PropTypes.array,
   clickFList: React.PropTypes.func,
   clickGroup: React.PropTypes.func,
+  clickAddGroup: React.PropTypes.func,
+  clickRepay: React.PropTypes.func,
   children: React.PropTypes.any,
   fetchGetGroupList: React.PropTypes.func,
+  fetchGetFriendList: React.PropTypes.func,
 };
