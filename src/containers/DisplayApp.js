@@ -3,7 +3,7 @@ import { push } from 'react-router-redux';
 import { setDisplay } from '../actions/index';
 import { fetchGetFriendList } from '../actions/friendList';
 import { fetchGetGroupList, changeActiveGroup } from '../actions/groupList';
-import { fetchGetGroupFriends } from '../actions/groupFriends';
+import { fetchGetGroupFriends, resetGroupFriends } from '../actions/groupFriends';
 import { fetchGetDebtList } from '../actions/debtList';
 import App from '../components/App';
 
@@ -20,6 +20,10 @@ const mapDispatchToProps = (dispatch) => ({
   },
   clickRepay: () => {
     dispatch(push('/app/repay'));
+  },
+  clickAddGroup: () => {
+    dispatch(resetGroupFriends());
+    dispatch(push('/app/addGroup'));
   },
   clickGroup: (username, groupName) => {
     dispatch(fetchGetGroupFriends(username, groupName));
