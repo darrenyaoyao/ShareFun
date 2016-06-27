@@ -1,3 +1,4 @@
+/* eslint react/jsx-no-bind: 0*/
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -54,7 +55,7 @@ export default class App extends Component {
   }
   render() {
     const { username, friendList, groupList,
-            clickFList } = this.props;
+            clickFList, clickRepay } = this.props;
     const buttonstyle = {
       margin: 12,
     };
@@ -81,6 +82,7 @@ export default class App extends Component {
           <Row>
             <Col xs={3} sm={3} md={3} lg={3} className={appcss.side}>
               <List>
+                <FlatButton onClick={clickRepay} label="Repayment" />
                 <Subheader onClick={clickFList}>FriendList</Subheader>
                   {friendList.map(this.mapToFriend)}
                 <Divider />
@@ -102,6 +104,7 @@ App.propTypes = {
   groupList: React.PropTypes.array,
   clickFList: React.PropTypes.func,
   clickGroup: React.PropTypes.func,
+  clickRepay: React.PropTypes.func,
   children: React.PropTypes.any,
   fetchGetGroupList: React.PropTypes.func,
 };

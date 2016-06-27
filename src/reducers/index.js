@@ -6,6 +6,7 @@ import groupList from './groupList';
 import groupFriends from './groupFriends';
 import debtList from './debtList';
 import newDebt from './newDebt';
+import repayList from './repayList';
 
 const app = combineReducers({
   display,
@@ -15,6 +16,7 @@ const app = combineReducers({
   groupFriends,
   debtList,
   newDebt,
+  repayList,
 });
 
 export default app;

@@ -1,3 +1,4 @@
+/* eslint no-console: 0*/
 const Router = require('express').Router;
 const router = new Router();
 const Users = require('./database/Users');
@@ -72,4 +73,59 @@ router.get('/getDebtList/:username&&:groupName', (req, res) => {
     debtorList: [{ debtor: 'Tom', money: 100 }],
   }] });
 });
+
+const fakeList1 = [
+  {
+    groupName: 'fakeGroup1',
+    debtorList: [
+      {
+        debtor: 'JR',
+        money: 100,
+      },
+      {
+        debtor: 'KD',
+        money: 200,
+      },
+    ],
+  },
+];
+
+router.post('/addRepay', (req, res) => {
+  console.log(req.body);
+  res.json({ repayList: fakeList1 });
+});
+
+const fakeList = [
+  {
+    groupName: 'fakeGroup1',
+    debtorList: [
+      {
+        debtor: 'JR',
+        money: 100,
+      },
+      {
+        debtor: 'KD',
+        money: 200,
+      },
+    ],
+  },
+  {
+    groupName: 'fakeGroup2',
+    debtorList: [
+      {
+        debtor: 'JR2',
+        money: -100,
+      },
+      {
+        debtor: 'KD2',
+        money: -200,
+      },
+    ],
+  },
+];
+
+router.get('/getRepayList/:username', (req, res) => {
+  res.json({ repayList: fakeList });
+});
+
 module.exports = router;

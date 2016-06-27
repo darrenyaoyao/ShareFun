@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import { setDisplay } from '../actions/index';
 import { addFriend } from '../actions/friendList';
 import { fetchGetGroupList, changeActiveGroup } from '../actions/groupList';
@@ -16,6 +17,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   clickFList: () => {
     dispatch(setDisplay('friendList'));
+  },
+  clickRepay: () => {
+    dispatch(push('/app/repay'));
   },
   clickGroup: (username, groupName) => {
     dispatch(fetchGetGroupFriends(username, groupName));

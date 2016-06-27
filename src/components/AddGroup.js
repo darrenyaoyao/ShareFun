@@ -46,7 +46,7 @@ const AddGroup = ({ dispatch, groupFriends, username }) => {
         <ListItem
           id={appcss.listitem}
           leftIcon={<ActionGrade />}
-        > {x} 
+        > {x}
         </ListItem>
       ))}</List>
     </Col>
