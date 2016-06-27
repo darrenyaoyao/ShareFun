@@ -3,25 +3,18 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import 'babel-polyfill';
 import { Router, browserHistory } from 'react-router';
-import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import { routerMiddleware } from 'react-router-redux';
+import { syncHistoryWithStore } from 'react-router-redux';
+import configureStore from './store/configureStore.dev';
 import routes from './routes';
-import shareApp from './reducers';
+import { persistStore } from 'redux-persist';
 
-// let store = createStore(shareApp)
-const middleware = routerMiddleware(browserHistory);
-let store = createStore(
-  shareApp,
-  applyMiddleware(
-		middleware,
-		thunkMiddleware
-	)
-);
+const store = configureStore();
+persistStore(store);
+const history = syncHistoryWithStore(browserHistory, store);
 
 render(
   <Provider store={store}>
-    <Router history={browserHistory} routes={routes} />
+    <Router history={history} routes={routes} />
   </Provider>,
   document.getElementById('root')
 );

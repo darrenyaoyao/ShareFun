@@ -7,6 +7,7 @@ import groupFriends from './groupFriends';
 import debtList from './debtList';
 import newDebt from './newDebt';
 import repayList from './repayList';
+import { routerReducer } from 'react-router-redux';
 
 const app = combineReducers({
   display,
@@ -17,6 +18,7 @@ const app = combineReducers({
   debtList,
   newDebt,
   repayList,
+  routing: routerReducer,
 });
 
 export default app;
