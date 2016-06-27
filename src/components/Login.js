@@ -30,7 +30,7 @@ const Login = ({ dispatch, err }) => {
             >
               username: <TextField onChange={event => { username = event.target.value; }} /> <br />
               password : <TextField onChange={event => { password = event.target.value; }} /> <br />
-              <RaisedButton primary={true} type="submit" style={buttonstyle} >
+              <RaisedButton primary type="submit" style={buttonstyle} >
                 login
               </RaisedButton>
             </form>

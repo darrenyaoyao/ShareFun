@@ -74,10 +74,25 @@ router.get('/getDebtList/:username&&:groupName', (req, res) => {
   }] });
 });
 
+const fakeList1 = [
+  {
+    groupName: 'fakeGroup1',
+    debtorList: [
+      {
+        debtor: 'JR',
+        money: 100,
+      },
+      {
+        debtor: 'KD',
+        money: 200,
+      },
+    ],
+  },
+];
 
 router.post('/addRepay', (req, res) => {
   console.log(req.body);
-  res.json({ success: true });
+  res.json({ repayList: fakeList1 });
 });
 
 const fakeList = [

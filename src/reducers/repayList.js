@@ -11,6 +11,7 @@ const repayList = (state = {
     case 'RECEIVE_ADD_REPAY':
       return Object.assign({}, state, {
         isFetchingAdd: false,
+        list: action.payload,
       });
     case 'REQUEST_GET_REPAY_LIST':
       return Object.assign({}, state, {

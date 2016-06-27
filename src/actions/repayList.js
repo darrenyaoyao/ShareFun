@@ -1,12 +1,13 @@
+/* eslint no-console: 0*/
 import fetch from 'isomorphic-fetch';
 
 export const requestAddRepay = () => ({
   type: 'REQUEST_ADD_REPAY',
 });
 
-export const receiveAddRepay = (groupName, debtor) => ({
+export const receiveAddRepay = (repayList) => ({
   type: 'RECEIVE_ADD_REPAY',
-  payload: { groupName, debtor },
+  payload: { repayList },
 });
 
 export const fetchAddRepay = (username, groupName, debtor) => (
@@ -27,7 +28,7 @@ export const fetchAddRepay = (username, groupName, debtor) => (
       .then(res => res.json())
       .then(json => {
         if (json.success) {
-          dispatch(receiveAddRepay(groupName, debtor));
+          dispatch(receiveAddRepay(json.repayList));
         }
       });
   }
