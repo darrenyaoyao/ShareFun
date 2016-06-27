@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => {
     friendList: state.friendList.list,
 		groupList: state.groupList.list,
 	  display: state.display,
-	  username: state.login.username	
+	  username: state.login.username,
 	}
 }
 

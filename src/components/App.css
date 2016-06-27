@@ -1,6 +1,19 @@
-.indent1{
-  padding-left:26px;
+.Appheader{
+  background-color: #00BCD4;
 }
+
+.logout{
+   margin : 12;
+}
+
+.side{
+   background-color: #EEEEEE;
+}
+
+#listitem{
+   -webkit-appearance: none;
+}
+
 .indent2{
   padding-left:40px;
 }
