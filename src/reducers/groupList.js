@@ -1,6 +1,7 @@
 const groupList = (state = {
   isFetchingAdd: false,
   isFetchingGet: false,
+  active: null,
   list: [],
   err: false,
 }, action) => {
@@ -23,6 +24,10 @@ const groupList = (state = {
       return Object.assign({}, state, {
         isFetchingGet: false,
         list: action.payload,
+      });
+    case 'CHANGE_ACTIVE_GROUP':
+      return Object.assign({}, state, {
+        active: action.payload,
       });
     default:
       return state;

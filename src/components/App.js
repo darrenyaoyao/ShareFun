@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import './App.css';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { FlatButton } from 'material-ui';
+import { List, ListItem } from 'material-ui/List';
+import ActionGrade from 'material-ui/svg-icons/action/grade';
+import Subheader from 'material-ui/Subheader';
+import Divider from 'material-ui/Divider';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+import appcss from './App.css';
 import AddFriend from '../containers/AddFriend';
 
 export default class App extends Component {
@@ -9,44 +17,81 @@ export default class App extends Component {
   }
   mapToFriend(friendObj) {
     return (
+      /*
       <li key={friendObj} className="list-group-item indent1">
         <button className="btn btn-link">
           {friendObj}
         </button>
-      </li>
+      </li>*/
+      <ListItem
+        id={appcss.listitem}
+        key={friendObj}
+        primaryText={friendObj}
+        leftIcon={<ActionGrade />}
+      />
 		);
   }
-  mapToGroup(groupObj) {
+  mapToGroup(groupName) {
+    const { username, clickGroup } = this.props;
     return (
-      <li key={groupObj.groupName} className="list-group-item indent2">
-        <Link to={'/app/group/'.concat(groupObj.groupName)} >
-          {groupObj.groupName}
-        </Link>
-      </li>
+      /*
+      <li key={groupName} className="list-group-item indent2">
+        <button
+          onClick={clickGroup.bind(this, username, groupName)}
+          className="btn btn-link"
+        >
+          {groupName}
+        </button>
+      </li>*/
+      <ListItem
+        id={appcss.listitem}
+        key={groupName}
+        primaryText={groupName}
+        leftIcon={<ActionGrade />}
+        onClick={clickGroup.bind(this, username, groupName)}
+      />
     );
   }
   render() {
     const { username, friendList, groupList,
-            clickFList, clickGList } = this.props;
+            clickFList } = this.props;
+    const buttonstyle = {
+      margin: 12,
+    };
     return (
-      <div>
-        <nav className="navbar navbar-inverse">
-          <div className="navbar-left"> <AddFriend /> </div>
-          <Link className="navbar-brand navbar-right" to="/Login"> Log out </Link>
-          <a className="navbar-brand navbar-right"> {username} </a>
-        </nav>
-        <ul className="list-group col-md-2">
-          <li className="list-group-item">
-            <button className="btn btn-link" onClick={clickFList}> friendList </button>
-          </li>
-					{friendList.map(this.mapToFriend)}
-          <li className="list-group-item">
-            <button className="btn btn-link" onClick={clickGList}> groupList </button>
-          </li>
-					{groupList.map(this.mapToGroup)}
-        </ul>
-				{this.props.children}
-      </div>
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+        <Grid>
+          <Row className={appcss.Appheader}>
+            <Col xs={6} sm={4} md={3} lg={3}>
+              <AddFriend />
+            </Col>
+            <Col xs={0} sm={4} md={6} lg={6} />
+            <Col xs={6} sm={4} md={3} lg={3}>
+              <Link to="/Login">
+                <FlatButton
+                  style={buttonstyle}
+                  backgroundColor="#FAFAFA"
+                  hoverColor="#E0E0E0"
+                  label="Log out"
+                />
+              </Link>
+              <a> {username} </a>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={3} sm={3} md={3} lg={3} className={appcss.side}>
+              <List>
+                <Subheader onClick={clickFList}>FriendList</Subheader>
+                  {friendList.map(this.mapToFriend)}
+                <Divider />
+                <Subheader> GroupList </Subheader>
+                  {groupList.map(this.mapToGroup.bind(this))}
+              </List>
+            </Col>
+            {this.props.children}
+          </Row>
+        </Grid>
+      </MuiThemeProvider>
     );
   }
 }
@@ -56,7 +101,7 @@ App.propTypes = {
   friendList: React.PropTypes.array,
   groupList: React.PropTypes.array,
   clickFList: React.PropTypes.func,
-  clickGList: React.PropTypes.func,
+  clickGroup: React.PropTypes.func,
   children: React.PropTypes.any,
   fetchGetGroupList: React.PropTypes.func,
 };
