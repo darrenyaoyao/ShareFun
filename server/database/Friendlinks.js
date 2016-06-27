@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
-const User = require('./Users');
+const User = require('./Users').User;
 
 const FriendLink = sequelize.define('friendlink', {
   user_1: Sequelize.STRING,
@@ -9,7 +9,7 @@ const FriendLink = sequelize.define('friendlink', {
 
 User.hasMany(FriendLink, { foreignKey: 'user_1_id' });
 
-FriendLink.sync().then(() => {
+FriendLink.sync({ force: true }).then(() => {
   // Table created
   console.log('Create friendlink table successfully.');
 }).catch((err) => {

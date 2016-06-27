@@ -50,6 +50,9 @@ export const fetchGetGroupList = function fetchGetGroupList(username) {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        username,
+      }),
     })
       .then(res => res.json())
       .then(json => {

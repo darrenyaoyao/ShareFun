@@ -7,11 +7,11 @@ import App from '../components/App';
 const mapStateToProps = (state, ownProps) => {
   return {
     friendList: state.friendList.list,
-		groupList: state.groupList.list,
-	  display: state.display,
-	  username: state.login.username	
-	}
-}
+    groupList: state.groupList.list,
+    display: state.display,
+    username: state.login.username,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   clickFList: () => {
