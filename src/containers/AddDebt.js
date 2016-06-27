@@ -6,6 +6,7 @@ const mapStateToProps = (state) => ({
   debtList: state.debtList.list,
   newDebt: state.newDebt,
   username: state.username,
+  groupName: state.groupList.active,
 });
 
 const DebtListContainer = connect(mapStateToProps)(DebtList);
