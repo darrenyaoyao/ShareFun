@@ -15,8 +15,10 @@ import AddFriend from '../containers/AddFriend';
 export default class App extends Component {
   componentWillMount() {
     this.props.fetchGetGroupList(this.props.username);
+    this.props.fetchGetFriendList(this.props.username);
   }
   mapToFriend(friendObj) {
+    console.log(friendObj);
     return (
       /*
       <li key={friendObj} className="list-group-item indent1">
@@ -34,6 +36,7 @@ export default class App extends Component {
   }
   mapToGroup(groupName) {
     const { username, clickGroup } = this.props;
+    console.log(groupName);
     return (
       /*
       <li key={groupName} className="list-group-item indent2">
@@ -54,8 +57,7 @@ export default class App extends Component {
     );
   }
   render() {
-    const { username, friendList, groupList,
-            clickFList, clickRepay } = this.props;
+    const { username, friendList, groupList, clickRepay } = this.props;
     const buttonstyle = {
       margin: 12,
     };
@@ -83,8 +85,8 @@ export default class App extends Component {
             <Col xs={3} sm={3} md={3} lg={3} className={appcss.side}>
               <List>
                 <FlatButton onClick={clickRepay} label="Repayment" />
-                <Subheader onClick={clickFList}>FriendList</Subheader>
-                  {friendList.map(this.mapToFriend)}
+                <Subheader>FriendList</Subheader>
+                  {friendList.map(this.mapToFriend.bind(this))}
                 <Divider />
                 <Subheader> GroupList </Subheader>
                   {groupList.map(this.mapToGroup.bind(this))}
@@ -107,4 +109,5 @@ App.propTypes = {
   clickRepay: React.PropTypes.func,
   children: React.PropTypes.any,
   fetchGetGroupList: React.PropTypes.func,
+  fetchGetFriendList: React.PropTypes.func,
 };

@@ -48,6 +48,19 @@ router.post('/addFriend', (req, res) => {
     });
 });
 
+router.get('/getFriendList/:username', (req, res) => {
+  console.log(req.params.username);
+  Users.findOneuser(req.params.username)
+    .then((user) => {
+      console.log('Find user');
+      user.getFriendlinks()
+      .then((friendlinks) => {
+        const friends = friendlinks.map(friendlink => friendlink.user_2);
+        res.json({ friendList: friends });
+      });
+    });
+});
+
 router.post('/addDebt', (req, res) => {
 	// code for discussion with db
   res.json({ success: true });

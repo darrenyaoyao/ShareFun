@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { setDisplay } from '../actions/index';
-import { addFriend } from '../actions/friendList';
+import { fetchGetFriendList } from '../actions/friendList';
 import { fetchGetGroupList, changeActiveGroup } from '../actions/groupList';
 import { fetchGetGroupFriends } from '../actions/groupFriends';
 import { fetchGetDebtList } from '../actions/debtList';
@@ -26,11 +26,11 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchGetDebtList(username, groupName));
     dispatch(changeActiveGroup(groupName));
   },
-  addFriend: (target) => {
-    dispatch(addFriend(target));
-  },
   fetchGetGroupList: (username) => {
     dispatch(fetchGetGroupList(username));
+  },
+  fetchGetFriendList: (username) => {
+    dispatch(fetchGetFriendList(username));
   },
 });
 
