@@ -29,12 +29,12 @@ const Login = ({ dispatch, err }) => {
                 password.getInputNode().value = '';
               }}
             >
-              <Row>
+              <Row center="xs" center="sm" center="md" center="lg">
                 username: <TextField
                   ref={x => { username = x; }}
                 />
               </Row>
-              <Row>
+              <Row center="xs" center="sm" center="md" center="lg">
                 password : <TextField
                   ref={x => { password = x; }}
                   errorText={err ? 'invalid password' : ''}
