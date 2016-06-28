@@ -4,7 +4,6 @@ import { fetchAddDebt, fetchGetGroupRepay } from '../actions/debtList';
 import { RaisedButton, TextField } from 'material-ui';
 import { Table, TableBody, TableHeader,
          TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
-import { Col } from 'react-flexbox-grid';
 import adddebt from './AddDebt.css';
 
 const DebtList = ({ dispatch, debtList,
@@ -14,7 +13,7 @@ const DebtList = ({ dispatch, debtList,
   let debtor;
   let money;
   return (
-    <Col className={adddebt.displaydebt} >
+    <div>
       <RaisedButton
         primary
         onMouseDown={() => { dispatch(fetchGetGroupRepay(username, groupName)); }}
@@ -91,7 +90,8 @@ const DebtList = ({ dispatch, debtList,
       <div className="debt-list">{
         debtList.map(x => (
           <div>
-            <h3> Title:{x.debtName} creditor: {x.creditor} </h3>
+            <span className={adddebt.fontStyle}> Title:{x.debtName} </span>
+            <span> creditor: {x.creditor} </span>
             <Table>
               <TableHeader displaySelectAll={false}>
                 <TableRow>
@@ -111,7 +111,7 @@ const DebtList = ({ dispatch, debtList,
           </div>
         ))
       }</div>
-    </Col>
+    </div>
    );
 };
 

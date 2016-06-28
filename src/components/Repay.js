@@ -9,6 +9,8 @@ import { Table,
          TableHeaderColumn } from 'material-ui/Table';
 import { Col } from 'react-flexbox-grid';
 import { RaisedButton } from 'material-ui';
+import groupStyle from './AddGroup.css';
+import repayStyle from './Repay.css';
 
 export default class Repay extends Component {
   componentWillMount() {
@@ -52,8 +54,8 @@ export default class Repay extends Component {
   render() {
     const { repayList } = this.props;
     return (
-      <Col md={6}>
-        <h2> Repay Interface </h2>
+      <Col md={6} className={repayStyle.repayMain}>
+        <h2 className={groupStyle.groupHeader}> Repay Interface </h2>
         {repayList.map(this.mapToList.bind(this))}
       </Col>
     );
