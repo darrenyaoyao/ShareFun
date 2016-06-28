@@ -4,6 +4,7 @@ const router = new Router();
 const Users = require('./database/Users').User;
 const Groups = require('./database/Users').Group;
 const Friendlinks = require('./database/Friendlinks');
+const GroupRepay = require('./database/GroupRepay');
 
 router.post('/login', (req, res) => {
   // code for discussion with db
@@ -189,6 +190,13 @@ const fakeRepay = [
 
 router.get('/getGroupRepay/:username&&:groupName', (req, res) => {
   res.json({ groupRepay: fakeRepay });
+  Groups.findOneGroup(req.params.groupName)
+    .then((group) => {
+      group.getGroupDebtLink
+        .then((groupsDebtLinks) => {
+          
+        });
+    });
 });
 
 module.exports = router;
