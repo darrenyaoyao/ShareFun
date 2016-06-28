@@ -2,7 +2,7 @@ import React from 'react';
 import { addDebtor, resetNewDebt } from '../actions/newDebt';
 import { fetchAddDebt } from '../actions/debtList';
 import { RaisedButton, TextField } from 'material-ui';
-import { Row, Col } from 'react-flexbox-grid';
+import { Col } from 'react-flexbox-grid';
 import adddebt from './AddDebt.css';
 
 const DebtList = ({ dispatch, debtList, newDebt, username }) => {
@@ -16,14 +16,14 @@ const DebtList = ({ dispatch, debtList, newDebt, username }) => {
           e.preventDefault();
           dispatch(fetchAddDebt('testName', 'testGroup', {
             crditor: username,
-            debtName: debtName.value,
+            debtName: debtName.getValue(),
             debtorList: newDebt,
           }));
-          debtName = '';
+          debtName.getInputNode().value = '';
           dispatch(resetNewDebt());
         }}
       >
-        DebtName: <TextField onChange={event => { debtName = event.target.value; }} />
+        DebtName: <TextField ref={x => { debtName = x; }} />
         <RaisedButton type="submit"> add debt </RaisedButton>
       </form>
       <table>
@@ -35,17 +35,17 @@ const DebtList = ({ dispatch, debtList, newDebt, username }) => {
         </thead>
         <tbody>
           <tr>
-            <td> <TextField onChange={event => { debtor = event.target.value; }} /> </td>
-            <td> <TextField onChange={event => { money = event.target.value; }} /> </td>
+            <td> <TextField ref={x => { debtor = x; }} /> </td>
+            <td> <TextField ref={x => { money = x; }} /> </td>
             <RaisedButton
               onClick={e => {
                 e.preventDefault();
                 dispatch(addDebtor({
-                  debtor: debtor,
-                  money: money,
+                  debtor: debtor.getValue(),
+                  money: money.getValue(),
                 }));
-                debtor = '';
-                money = '';
+                debtor.getInputNode().value = '';
+                money.getInputNode().value = '';
               }}
             > add
             </RaisedButton>

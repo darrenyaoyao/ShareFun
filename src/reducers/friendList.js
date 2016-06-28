@@ -3,9 +3,9 @@ const friendList = (state = {
   list: [],
   err: false,
 }, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'REQUEST_ADD_FRIEND':
-			return Object.assign({}, state, {
+      return Object.assign({}, state, {
         isFetching: true,
       });
     case 'RECEIVE_ADD_FRIEND':
@@ -23,9 +23,9 @@ const friendList = (state = {
         isFetchingGet: false,
         list: action.payload,
       });
-		default:
-			return state;
-	}
+    default:
+      return state;
+  }
 };
 
 export default friendList;
