@@ -32,14 +32,12 @@ const Group = sequelize.define('group', {
   },
 });
 
-
 const UserGroup = sequelize.define('usergroup', {
   // id: {
   //  type: Sequelize.INTEGER,
   //  primaryKey: true,
   // },
 });
-
 
 Group.belongsToMany(User, {
   through: {
@@ -58,7 +56,6 @@ User.belongsToMany(Group, {
   constraints: false,
   foreignKey: 'user_id',
 });
-
 
 User.sync().then(() => {
   // Table created
@@ -80,4 +77,4 @@ UserGroup.sync().then(() => {
   console.log('Create UserGroup table fail: ', err);
 });
 
-module.exports = (User, Group);
+module.exports = { User, Group };

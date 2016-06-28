@@ -8,19 +8,19 @@ const Friendlinks = require('./database/Friendlinks');
 router.post('/login', (req, res) => {
   // code for discussion with db
   Users.findOneuser(req.body.username)
-    .then((user) => {
-      if (user.password === req.body.password) {
-        res.json({ success: true });
-      } else {
-        res.json({ success: false });
-      }
-    }).catch(() => {
+  .then((user) => {
+    if (user.password === req.body.password) {
       res.json({ success: true });
-      Users.create({
-        username: req.body.username,
-        password: req.body.password,
-      });
+    } else {
+      res.json({ success: false });
+    }
+  }).catch(() => {
+    res.json({ success: true });
+    Users.create({
+      username: req.body.username,
+      password: req.body.password,
     });
+  });
 });
 
 router.post('/addFriend', (req, res) => {
