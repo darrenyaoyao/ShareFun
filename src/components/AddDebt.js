@@ -91,12 +91,23 @@ const DebtList = ({ dispatch, debtList,
       <div className="debt-list">{
         debtList.map(x => (
           <div>
-            <h3> {x.debtName} </h3>
-            <h4> {x.creditor} </h4>
-            <ul>{x.debtorList.map(y => (
-              <li> {y.debtor.concat(' ').concat(y.money)} </li>)
-                  )}
-            </ul>
+            <h3> Title:{x.debtName} creditor: {x.creditor} </h3>
+            <Table>
+              <TableHeader displaySelectAll={false}>
+                <TableRow>
+                  <TableHeaderColumn>people</TableHeaderColumn>
+                  <TableHeaderColumn>money</TableHeaderColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody displayRowCheckbox={false}>
+                {x.debtorList.map(y => (
+                  <TableRow>
+                    <TableRowColumn>{y.debtor}</TableRowColumn>
+                    <TableRowColumn>{y.money}</TableRowColumn>
+                  </TableRow>)
+                )}
+              </TableBody>
+            </Table>
           </div>
         ))
       }</div>
