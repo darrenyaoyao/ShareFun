@@ -4,6 +4,11 @@ export const addGroupFriend = (groupFriend) => ({
   payload: groupFriend,
 });
 
+export const removeGroupFriend = (groupFriend) => ({
+  type: 'REMOVE_GROUP_FRIEND',
+  payload: groupFriend,
+});
+
 export const resetGroupFriends = () => ({
   type: 'RESET_GROUP_FRIENDS',
 });
@@ -15,6 +20,11 @@ export const requestGetGroupFriends = () => ({
 export const receiveGetGroupFriends = (groupFriends) => ({
   type: 'RECEIVE_GET_GROUP_FRIENDS',
   payload: groupFriends,
+});
+
+export const errorGroupFriend = (err) => ({
+  type: 'ERROR_GROUP_FRIEND',
+  payload: err,
 });
 
 export const fetchGetGroupFriends = (username, groupName) => (

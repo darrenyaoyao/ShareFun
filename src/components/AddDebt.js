@@ -1,16 +1,31 @@
 import React from 'react';
 import { addDebtor, resetNewDebt } from '../actions/newDebt';
-import { fetchAddDebt } from '../actions/debtList';
+import { fetchAddDebt, fetchGetGroupRepay } from '../actions/debtList';
 import { RaisedButton, TextField } from 'material-ui';
 import { Col } from 'react-flexbox-grid';
 import adddebt from './AddDebt.css';
 
-const DebtList = ({ dispatch, debtList, newDebt, username }) => {
+const DebtList = ({ dispatch, debtList,
+                    newDebt, username,
+                    groupName, repayList }) => {
   let debtName;
   let debtor;
   let money;
   return (
     <Col className={adddebt.displaydebt} >
+      <RaisedButton
+        primary
+        onMouseDown={() => { dispatch(fetchGetGroupRepay(username, groupName)); }}
+      > settle debt </RaisedButton>
+      <div hidden={repayList.length === 0}>
+        <h3> Summay of Debt </h3>
+        {
+          repayList.map((x) => (
+            <li> {x.debtor.concat(' ').concat(x.money)} </li>
+          ))
+        }
+        <br />
+      </div>
       <form
         onSubmit={e => {
           e.preventDefault();
@@ -77,9 +92,11 @@ const DebtList = ({ dispatch, debtList, newDebt, username }) => {
 DebtList.propTypes = {
   dispatch: React.PropTypes.func,
   debtList: React.PropTypes.array,
+  repayList: React.PropTypes.array,
   groupFriends: React.PropTypes.array,
   newDebt: React.PropTypes.array,
   username: React.PropTypes.string,
+  groupName: React.PropTypes.string,
 };
 
 export default DebtList;

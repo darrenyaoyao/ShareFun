@@ -28,13 +28,21 @@ const Login = ({ dispatch, err }) => {
                 password.getInputNode().value = '';
               }}
             >
-              username: <TextField ref={x => { username = x; }} /> <br />
-              password : <TextField ref={x => { password = x; }} /> <br />
+              <Row>
+                username: <TextField
+                  onChange={event => { username = event.target.value; }}
+                />
+              </Row>
+              <Row>
+                password : <TextField
+                  onChange={event => { password = event.target.value; }}
+                  errorText={err ? 'invalid password' : ''}
+                />
+              </Row>
               <RaisedButton primary type="submit" style={buttonstyle} >
                 login
               </RaisedButton>
             </form>
-            <h3> {(err ? 'invalid user' : '')} </h3>
           </Col>
         </Row>
       </Grid>

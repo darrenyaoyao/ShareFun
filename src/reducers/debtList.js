@@ -1,7 +1,10 @@
 const debtList = (state = {
   isFetchingAdd: false,
   isFetchingGet: false,
+  isFetchingRepay: false,
   list: [],
+  repayList: [],
+  settled: false,
   err: false,
 }, action) => {
   switch (action.type) {
@@ -23,6 +26,16 @@ const debtList = (state = {
       return Object.assign({}, state, {
         isFetchingGet: false,
         list: action.payload,
+      });
+    case 'REQUEST_GET_GROUP_REPAY':
+      return Object.assign({}, state, {
+        isFetchingRepay: true,
+      });
+    case 'RECEIVE_GET_GROUP_REPAY':
+      return Object.assign({}, state, {
+        isFetchingRepay: false,
+        settled: true,
+        repayList: action.payload,
       });
     default:
       return state;
