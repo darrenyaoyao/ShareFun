@@ -20,16 +20,16 @@ const Login = ({ dispatch, err }) => {
             <form
               onSubmit={e => {
                 e.preventDefault();
-                if (!username || !password) {
+                if (!username.getValue() || !password.getValue()) {
                   return;
                 }
-                dispatch(fetchLogin(username, password));
-                username = '';
-                password = '';
+                dispatch(fetchLogin(username.getValue(), password.getValue()));
+                username.getInputNode().value = '';
+                password.getInputNode().value = '';
               }}
             >
-              username: <TextField onChange={event => { username = event.target.value; }} /> <br />
-              password : <TextField onChange={event => { password = event.target.value; }} /> <br />
+              username: <TextField ref={x => { username = x; }} /> <br />
+              password : <TextField ref={x => { password = x; }} /> <br />
               <RaisedButton primary type="submit" style={buttonstyle} >
                 login
               </RaisedButton>

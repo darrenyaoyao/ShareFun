@@ -16,29 +16,29 @@ const AddGroup = ({ dispatch, groupFriends, username }) => {
       <form
         onSubmit={e => {
           e.preventDefault();
-          if (!groupName) { return; }
-          dispatch(fetchAddGroup(username, groupName, [...groupFriends, username]));
+          if (!groupName.getValue()) { return; }
+          dispatch(fetchAddGroup(username, groupName.getValue(), [...groupFriends, username]));
           dispatch(resetGroupFriends());
-          groupName = '';
+          groupName.getInputNode().value = '';
         }}
       >
         <Row center="xs" center="sm" center="md" center="lg">
           <RaisedButton type="submit" > Create Group </RaisedButton> <br />
         </Row>
         <Row>
-          GroupName: <TextField onChange={event => { groupName = event.target.value; }} />
+          GroupName: <TextField ref={(x) => { groupName = x; }} />
         </Row>
       </form>
       <form
         onSubmit={e => {
           e.preventDefault();
-          if (!friendName) { return; }
-          dispatch(addGroupFriend(friendName));
-          friendName = '';
+          if (!friendName.getValue()) { return; }
+          dispatch(addGroupFriend(friendName.getValue()));
+          friendName.getInputNode().value = '';
         }}
       >
         <Row center="xs" center="sm" center="md" center="lg">
-          Friend: <TextField onChange={event => { friendName = event.target.value; }} />
+          Friend: <TextField ref={(x) => { friendName = x; }} />
           <RaisedButton type="submit"> Add Friend </RaisedButton>
         </Row>
       </form>
