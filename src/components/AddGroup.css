@@ -1,5 +1,10 @@
 .mainblock{
-   margin-top: 50px;
-	margin-left: 210px;
+  margin-top: 50px;
+	margin-left: 100px;
 	width: 500px;
+}
+.groupHeader{
+  font-family: 'Muli';
+  color: #585858;
+  font-size: 35px;
 }

@@ -82,7 +82,7 @@ export default class App extends Component {
               <a> {username} </a>
             </Col>
           </Row>
-          <Row>
+          <Row className={appcss.toButtom}>
             <Col xs={3} sm={3} md={3} lg={3} className={appcss.side}>
               <List>
                 <FlatButton onClick={clickAddGroup} label="addGroup" /> <br />
