@@ -25,12 +25,12 @@ const AddGroup = ({ dispatch, groupFriends, username, friendList, groupList, err
         onSubmit={e => {
           e.preventDefault();
 
-          if (!groupName) { return; }
-          if (groupList.filter(x => x === groupName).length !== 0) {
-            dispatch(errorAddGroup(`${groupName} already exists!`));
+          if (!groupName.getValue()) { return; }
+          if (groupList.filter(x => x === groupName.getValue()).length !== 0) {
+            dispatch(errorAddGroup(`${groupName.getValue()} already exists!`));
             return;
           }
-          dispatch(fetchAddGroup(username, groupName, [...groupFriends, username]));
+          dispatch(fetchAddGroup(username, groupName.getValue(), [...groupFriends, username]));
           dispatch(resetGroupFriends());
           groupName.getInputNode().value = '';
         }}
@@ -40,7 +40,7 @@ const AddGroup = ({ dispatch, groupFriends, username, friendList, groupList, err
         </Row>
         <Row>
           GroupName: <TextField
-            onChange={event => { groupName = event.target.value; }}
+            ref={(x) => { groupName = x; }}
             errorText={err[1]}
           />
         </Row>
@@ -48,20 +48,20 @@ const AddGroup = ({ dispatch, groupFriends, username, friendList, groupList, err
       <form
         onSubmit={e => {
           e.preventDefault();
-          if (!friendName) { return; }
-          if (friendList.filter(x => (x === friendName)).length === 0) {
+          if (!friendName.getValue()) { return; }
+          if (friendList.filter(x => (x === friendName.getValue())).length === 0) {
             dispatch(errorGroupFriend(
-              `${friendName} isn\'t your friend yet. Invite him/her to join with you  !`
+              `${friendName.getValue()} isn\'t your friend yet. Invite him/her to join with you  !`
             ));
             return;
           }
-          dispatch(addGroupFriend(friendName));
-          friendName = '';
+          dispatch(addGroupFriend(friendName.getValue()));
+          friendName.getInputNode().value = '';
         }}
       >
         <Row center="xs" center="sm" center="md" center="lg">
           Friend: <TextField
-            onChange={event => { friendName = event.target.value; }}
+            ref={(x) => { friendName = x; }}
             errorText={err[0]}
           />
           <RaisedButton type="submit"> Add Friend </RaisedButton>

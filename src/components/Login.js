@@ -30,12 +30,12 @@ const Login = ({ dispatch, err }) => {
             >
               <Row>
                 username: <TextField
-                  onChange={event => { username = event.target.value; }}
+                  ref={x => { username = x; }}
                 />
               </Row>
               <Row>
                 password : <TextField
-                  onChange={event => { password = event.target.value; }}
+                  ref={x => { password = x; }}
                   errorText={err ? 'invalid password' : ''}
                 />
               </Row>

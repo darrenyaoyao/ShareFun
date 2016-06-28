@@ -2,6 +2,8 @@ import React from 'react';
 import { addDebtor, resetNewDebt } from '../actions/newDebt';
 import { fetchAddDebt, fetchGetGroupRepay } from '../actions/debtList';
 import { RaisedButton, TextField } from 'material-ui';
+import { Table, TableBody, TableHeader,
+         TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import { Col } from 'react-flexbox-grid';
 import adddebt from './AddDebt.css';
 
@@ -19,11 +21,24 @@ const DebtList = ({ dispatch, debtList,
       > settle debt </RaisedButton>
       <div hidden={repayList.length === 0}>
         <h3> Summay of Debt </h3>
-        {
-          repayList.map((x) => (
-            <li> {x.debtor.concat(' ').concat(x.money)} </li>
-          ))
-        }
+        <Table>
+          <TableHeader displaySelectAll={false}>
+            <TableRow>
+              <TableHeaderColumn>people</TableHeaderColumn>
+              <TableHeaderColumn>money</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+          {
+            repayList.map((x) => (
+              <TableRow>
+                <TableRowColumn>{x.debtor}</TableRowColumn>
+                <TableRowColumn>{x.money}</TableRowColumn>
+              </TableRow>
+            ))
+          }
+          </TableBody>
+        </Table>
         <br />
       </div>
       <form
@@ -76,12 +91,23 @@ const DebtList = ({ dispatch, debtList,
       <div className="debt-list">{
         debtList.map(x => (
           <div>
-            <h3> {x.debtName} </h3>
-            <h4> {x.creditor} </h4>
-            <ul>{x.debtorList.map(y => (
-              <li> {y.debtor.concat(' ').concat(y.money)} </li>)
-                  )}
-            </ul>
+            <h3> Title:{x.debtName} creditor: {x.creditor} </h3>
+            <Table>
+              <TableHeader displaySelectAll={false}>
+                <TableRow>
+                  <TableHeaderColumn>people</TableHeaderColumn>
+                  <TableHeaderColumn>money</TableHeaderColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody displayRowCheckbox={false}>
+                {x.debtorList.map(y => (
+                  <TableRow>
+                    <TableRowColumn>{y.debtor}</TableRowColumn>
+                    <TableRowColumn>{y.money}</TableRowColumn>
+                  </TableRow>)
+                )}
+              </TableBody>
+            </Table>
           </div>
         ))
       }</div>
