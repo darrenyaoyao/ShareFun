@@ -180,4 +180,13 @@ router.get('/getRepayList/:username', (req, res) => {
   res.json({ repayList: fakeList });
 });
 
+const fakeRepay = [
+  { debtor: 'user1', money: 50 },
+  { debtor: 'user2', money: 80 },
+];
+
+router.get('/getGroupRepay/:username&&:groupName', (req, res) => {
+  res.json({ groupRepay: fakeRepay });
+});
+
 module.exports = router;

@@ -4,8 +4,9 @@ import DebtList from '../components/AddDebt';
 const mapStateToProps = (state) => ({
   groupFriends: state.groupFriends,
   debtList: state.debtList.list,
+  repayList: state.debtList.repayList,
   newDebt: state.newDebt,
-  username: state.username,
+  username: state.login.username,
   groupName: state.groupList.active,
 });
 
