@@ -7,6 +7,7 @@ import { fetchGetGroupFriends, resetGroupFriends } from '../actions/groupFriends
 import { fetchGetDebtList } from '../actions/debtList';
 import App from '../components/App';
 
+
 const mapStateToProps = (state) => ({
   friendList: state.friendList.list,
   groupList: state.groupList.list,

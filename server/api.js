@@ -1,7 +1,8 @@
 /* eslint no-console: 0*/
 const Router = require('express').Router;
 const router = new Router();
-const Users = require('./database/Users');
+const Users = require('./database/Users').User;
+const Groups = require('./database/Users').Group;
 const Friendlinks = require('./database/Friendlinks');
 
 router.post('/login', (req, res) => {
@@ -23,7 +24,7 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/addFriend', (req, res) => {
-  // code for discussion with db
+	// code for discussion with db
   Users.findOneuser(req.body.friendname)
     .then((friend) => {
       Friendlinks.create({
@@ -42,6 +43,7 @@ router.post('/addFriend', (req, res) => {
           user.addFriendlink(friendlink);
         });
       });
+
       res.json({ success: true });
     }).catch(() => {
       res.json({ success: false });
@@ -68,15 +70,52 @@ router.post('/addDebt', (req, res) => {
 
 router.post('/addGroup', (req, res) => {
 	// code for discussion with db
-  res.json({ success: true });
+  Groups.create({
+    groupName: req.body.groupName,
+  }).then((group) => {
+    req.body.groupFriends.map(x => (
+			Users.findOneuser(x)
+      .then((user) => {
+        group.addUser(user);
+        user.addGroup(group);
+      })
+		));
+    res.json({ success: true });
+  }).catch(() => {
+    res.json({ success: false });
+  });
 });
 
 router.get('/getGroupList/:username', (req, res) => {
-  res.json({ groupList: ['g1', 'g2'] });
+  Users.findOneuser(req.params.username)
+    .then((user) => {
+      const tmpList = [];
+      user.getGroups()
+        .then((groups) => {
+          groups.forEach(x => {
+            tmpList.push(x.groupName);
+          });
+          res.json({ groupList: tmpList });
+        });
+    }).catch(() => {
+      res.json({ groupList: [] });
+    });
 });
 
 router.post('/getGroupFriends', (req, res) => {
-  res.json({ groupFriends: ['f1', 'f2'] });
+  Groups.findOneGroup(req.body.groupName)
+    .then((group) => {
+      const tmpList = [];
+      group.getUsers()
+        .then((members) => {
+          // const filtered = members.filter(member => (member.username !== req.body.username));
+          // filtered.forEach(y => console.log(y.username));
+          members.forEach(x => {
+            tmpList.push(x.username);
+          });
+          res.json({ groupFriends: tmpList });
+        });
+    });
 });
 
 router.get('/getDebtList/:username&&:groupName', (req, res) => {

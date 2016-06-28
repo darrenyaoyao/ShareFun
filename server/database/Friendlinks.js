@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
-const User = require('./Users');
+const User = require('./Users').User;
 
 const FriendLink = sequelize.define('friendlink', {
   user_1: Sequelize.STRING,
