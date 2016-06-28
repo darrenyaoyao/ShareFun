@@ -44,7 +44,7 @@ const DebtList = ({ dispatch, debtList,
       <form
         onSubmit={e => {
           e.preventDefault();
-          dispatch(fetchAddDebt('testName', 'testGroup', {
+          dispatch(fetchAddDebt(username, groupName, {
             crditor: username,
             debtName: debtName.getValue(),
             debtorList: newDebt,
@@ -119,7 +119,6 @@ DebtList.propTypes = {
   dispatch: React.PropTypes.func,
   debtList: React.PropTypes.array,
   repayList: React.PropTypes.array,
-  groupFriends: React.PropTypes.array,
   newDebt: React.PropTypes.array,
   username: React.PropTypes.string,
   groupName: React.PropTypes.string,
