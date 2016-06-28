@@ -7,6 +7,7 @@ const Friendlinks = require('./database/Friendlinks');
 
 router.post('/login', (req, res) => {
   // code for discussion with db
+  console.log(456);
   Users.findOneuser(req.body.username)
   .then((user) => {
     if (user.password === req.body.password) {
@@ -180,6 +181,15 @@ const fakeList = [
 
 router.get('/getRepayList/:username', (req, res) => {
   res.json({ repayList: fakeList });
+});
+
+const fakeRepay = [
+  { debtor: 'user1', money: 50 },
+  { debtor: 'user2', money: 80 },
+];
+
+router.get('/getGroupRepay/:username&&:groupName', (req, res) => {
+  res.json({ groupRepay: fakeRepay });
 });
 
 module.exports = router;
