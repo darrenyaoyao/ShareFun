@@ -1,24 +1,23 @@
-const friendList = (state = {
-  isFetching: false,
+const repayList = (state = {
+  isFetchingAdd: false,
+  isFetchingGet: false,
   list: [],
-  err: false,
 }, action) => {
   switch (action.type) {
-    case 'REQUEST_ADD_FRIEND':
+    case 'REQUEST_ADD_REPAY':
       return Object.assign({}, state, {
-        isFetching: true,
+        isFetchingAdd: true,
       });
-    case 'RECEIVE_ADD_FRIEND':
+    case 'RECEIVE_ADD_REPAY':
       return Object.assign({}, state, {
-        isFetching: false,
-        err: action.err,
-        list: [...state.friendList, action.friendname],
+        isFetchingAdd: false,
+        list: action.payload,
       });
-    case 'REQUEST_GET_FRIEND_LIST':
+    case 'REQUEST_GET_REPAY_LIST':
       return Object.assign({}, state, {
         isFetchingGet: true,
       });
-    case 'RECEIVE_GET_FRIEND_LIST':
+    case 'RECEIVE_GET_REPAY_LIST':
       return Object.assign({}, state, {
         isFetchingGet: false,
         list: action.payload,
@@ -28,4 +27,4 @@ const friendList = (state = {
   }
 };
 
-export default friendList;
+export default repayList;
