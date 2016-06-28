@@ -7,7 +7,6 @@ export const requestAddGroup = () => ({
 export const receiveAddGroup = (json, groupName) => ({
   type: 'RECEIVE_ADD_GROUP',
   payload: groupName,
-  err: !json.success,
 });
 
 export const fetchAddGroup = function fetchAddGroup(username, groupName, groupFriends) {
@@ -31,6 +30,11 @@ export const fetchAddGroup = function fetchAddGroup(username, groupName, groupFr
      });
   };
 };
+
+export const errorAddGroup = (err) => ({
+  type: 'ERROR_ADD_GROUP',
+  payload: err,
+});
 
 export const requestGetGroupList = () => ({
   type: 'REQUEST_GET_GROUP_LIST',
