@@ -2,6 +2,8 @@ import React from 'react';
 import { addDebtor, resetNewDebt } from '../actions/newDebt';
 import { fetchAddDebt, fetchGetGroupRepay } from '../actions/debtList';
 import { RaisedButton, TextField } from 'material-ui';
+import { Table, TableBody, TableHeader,
+         TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import { Col } from 'react-flexbox-grid';
 import adddebt from './AddDebt.css';
 
@@ -19,11 +21,24 @@ const DebtList = ({ dispatch, debtList,
       > settle debt </RaisedButton>
       <div hidden={repayList.length === 0}>
         <h3> Summay of Debt </h3>
-        {
-          repayList.map((x) => (
-            <li> {x.debtor.concat(' ').concat(x.money)} </li>
-          ))
-        }
+        <Table>
+          <TableHeader displaySelectAll={false}>
+            <TableRow>
+              <TableHeaderColumn>people</TableHeaderColumn>
+              <TableHeaderColumn>money</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+          {
+            repayList.map((x) => (
+              <TableRow>
+                <TableRowColumn>{x.debtor}</TableRowColumn>
+                <TableRowColumn>{x.money}</TableRowColumn>
+              </TableRow>
+            ))
+          }
+          </TableBody>
+        </Table>
         <br />
       </div>
       <form
