@@ -25,29 +25,31 @@ router.post('/login', (req, res) => {
 
 router.post('/addFriend', (req, res) => {
 	// code for discussion with db
-  Users.findOneuser(req.body.friendname)
-    .then((friend) => {
-      Friendlinks.create({
-        user_1: req.body.friendname,
-        user_2: req.body.username,
-      }).then((friendlink) => {
-        friend.addFriendlink(friendlink);
-      });
-
-      Friendlinks.create({
-        user_1: req.body.username,
-        user_2: req.body.friendname,
-      }).then((friendlink) => {
-        Users.findOneuser(req.body.username)
-        .then((user) => {
-          user.addFriendlink(friendlink);
-        });
-      });
-
-      res.json({ success: true });
-    }).catch(() => {
-      res.json({ success: false });
+  Users.findOne({
+    where: { username: req.body.friendname },
+  }).then((friend) => {
+    console.log(friend);
+    Friendlinks.create({
+      user_1: req.body.friendname,
+      user_2: req.body.username,
+    }).then((friendlink) => {
+      friend.addFriendlink(friendlink);
     });
+
+    Friendlinks.create({
+      user_1: req.body.username,
+      user_2: req.body.friendname,
+    }).then((friendlink) => {
+      Users.findOneuser(req.body.username)
+      .then((user) => {
+        user.addFriendlink(friendlink);
+      });
+    });
+
+    res.json({ success: true });
+  }).catch(() => {
+    res.json({ success: false });
+  });
 });
 
 router.get('/getFriendList/:username', (req, res) => {
@@ -178,6 +180,15 @@ const fakeList = [
 
 router.get('/getRepayList/:username', (req, res) => {
   res.json({ repayList: fakeList });
+});
+
+const fakeRepay = [
+  { debtor: 'user1', money: 50 },
+  { debtor: 'user2', money: 80 },
+];
+
+router.get('/getGroupRepay/:username&&:groupName', (req, res) => {
+  res.json({ groupRepay: fakeRepay });
 });
 
 module.exports = router;

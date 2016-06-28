@@ -20,12 +20,12 @@ const Login = ({ dispatch, err }) => {
             <form
               onSubmit={e => {
                 e.preventDefault();
-                if (!username || !password) {
+                if (!username.getValue() || !password.getValue()) {
                   return;
                 }
-                dispatch(fetchLogin(username, password));
-                username = '';
-                password = '';
+                dispatch(fetchLogin(username.getValue(), password.getValue()));
+                username.getInputNode().value = '';
+                password.getInputNode().value = '';
               }}
             >
               <Row>

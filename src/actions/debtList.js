@@ -55,3 +55,24 @@ export const fetchGetDebtList = function fetchGetDebtList(username, groupName) {
       });
   };
 };
+
+export const requestGetGroupRepay = () => ({
+  type: 'REQUEST_GET_GROUP_REPAY',
+});
+
+export const receiveGetGroupRepay = (groupRepay) => ({
+  type: 'RECEIVE_GET_GROUP_REPAY',
+  payload: groupRepay,
+});
+
+export const fetchGetGroupRepay = (username, groupName) => (
+  dispatch => {
+    dispatch(requestGetGroupRepay());
+    return fetch(`/api/getGroupRepay/${username}&&${groupName}`, {
+    })
+      .then(res => res.json())
+      .then(json => {
+        dispatch(receiveGetGroupRepay(json.groupRepay));
+      });
+  }
+);
