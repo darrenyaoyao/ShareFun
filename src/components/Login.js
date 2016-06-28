@@ -4,6 +4,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { RaisedButton, TextField } from 'material-ui';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { fetchLogin } from '../actions/login';
+import loginStyle from './Login.css';
 
 const Login = ({ dispatch, err }) => {
   let username;
@@ -16,7 +17,7 @@ const Login = ({ dispatch, err }) => {
       <Grid>
         <Row center="xs" center="sm" center="md" center="lg">
           <Col xs={8} sm={8} md={6} lg={6}>
-            <h1> ShareFun </h1>
+            <h1 className={loginStyle.loginHeader}> ShareFun </h1>
             <form
               onSubmit={e => {
                 e.preventDefault();
@@ -28,12 +29,12 @@ const Login = ({ dispatch, err }) => {
                 password.getInputNode().value = '';
               }}
             >
-              <Row>
+              <Row center="xs" center="sm" center="md" center="lg">
                 username: <TextField
                   ref={x => { username = x; }}
                 />
               </Row>
-              <Row>
+              <Row center="xs" center="sm" center="md" center="lg">
                 password : <TextField
                   ref={x => { password = x; }}
                   errorText={err ? 'invalid password' : ''}
