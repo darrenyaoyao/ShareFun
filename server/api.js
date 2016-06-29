@@ -14,7 +14,6 @@ const log = (inst) => {
 
 router.post('/login', (req, res) => {
   // code for discussion with db
-  console.log(456);
   Users.findOneuser(req.body.username)
   .then((user) => {
     if (user.password === req.body.password) {
@@ -60,10 +59,8 @@ router.post('/addFriend', (req, res) => {
 });
 
 router.get('/getFriendList/:username', (req, res) => {
-  console.log(req.params.username);
   Users.findOneuser(req.params.username)
     .then((user) => {
-      console.log('Find user');
       user.getFriendlinks()
       .then((friendlinks) => {
         const friends = friendlinks.map(friendlink => friendlink.user_2);
@@ -122,12 +119,12 @@ router.get('/getGroupList/:username', (req, res) => {
     .then((user) => {
       const tmpList = [];
       user.getGroups()
-        .then((groups) => {
-          groups.forEach(x => {
-            tmpList.push(x.groupName);
-          });
-          res.json({ groupList: tmpList });
+      .then((groups) => {
+        groups.forEach(x => {
+          tmpList.push(x.groupName);
         });
+        res.json({ groupList: tmpList });
+      });
     }).catch(() => {
       res.json({ groupList: [] });
     });
@@ -154,27 +151,30 @@ router.get('/getDebtList/:username&&:groupName', (req, res) => {
   Groups.findOneGroup(req.params.groupName)
   .then((group) => {
     log(group);
-    group.getGroupDebts();
-  }).then((debts) => {
-    for (const x in debts) {
-      log(x);
-      const debtorList = [];
-      x.getDebtDebtors()
-      .then((debtors) => {
-        for (const y in debtors) {
-          log(y);
-          debtorList.push({ debtor: y.debtor, money: y.money });
-        }
-        debtList.push({
-          debtName: x.debt,
-          creditor: x.creditor,
-          debtorList,
+    group.getGroupDebts()
+    .then((debts) => {
+      debts.forEach(x => {
+        const debtorList = [];
+        x.getDebtDebtors()
+        .then((debtors) => {
+          debtors.forEach(y => {
+            debtorList.push({ debtor: y.debtor, money: y.money });
+          });
+
+          console.log('~~~~~~~');
+          debtorList.forEach(z => { console.log(z); });
         });
+
+        debtList.push({ debtName: x.debt, creditor: x.creditor, debtorList });
       });
-    res.json({ debtList });
-    }
+      console.log('!!!');
+      debtList.forEach(w => { console.log(w); });
+      res.json({ debtList });
+    });
+    // res.json({ debtList });
   });
 });
+
 
 const fakeList1 = [
   {
