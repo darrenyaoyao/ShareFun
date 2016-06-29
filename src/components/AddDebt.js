@@ -17,7 +17,7 @@ const DebtList = ({ dispatch, debtList,
         onMouseDown={() => { dispatch(fetchGetGroupRepay(username, groupName)); }}
       > settle debt </RaisedButton>
       <div hidden={repayList.length === 0}>
-        <h3> Summay of Debt </h3>
+        <h3 className={adddebt.fontStyle}> Summay of Debt </h3>
         <Table>
           <TableHeader displaySelectAll={false}>
             <TableRow>
@@ -60,27 +60,30 @@ const DebtList = ({ dispatch, debtList,
           debtName.getInputNode().value = '';
         }}
       >
-        DebtName: <TextField ref={x => { debtName = x; }} />
-        <RaisedButton type="submit"> add debt </RaisedButton>
-      </form>
-      <Table>
-        <TableHeader displaySelectAll={false}>
-          <TableRow>
-            <TableHeaderColumn> Name </TableHeaderColumn>
-            <TableHeaderColumn> Money </TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
-          {groupFriends.map(x => (
+        <TextField
+          hintText="title of debt"
+          ref={x => { debtName = x; }}
+        />
+        <Table>
+          <TableHeader displaySelectAll={false}>
             <TableRow>
-              <TableRowColumn>{x}</TableRowColumn>
-              <TextField
-                ref={y => { moneyRefs.push(y); }}
-              />
+              <TableHeaderColumn> Name </TableHeaderColumn>
+              <TableHeaderColumn> Money </TableHeaderColumn>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+            {groupFriends.map(x => (
+              <TableRow>
+                <TableRowColumn>{x}</TableRowColumn>
+                <TextField
+                  ref={y => { moneyRefs.push(y); }}
+                />
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <RaisedButton primary type="submit"> add debt </RaisedButton>
+      </form>
       <div className="debt-list">{
         debtList.map(x => (
           <div className={adddebt.debtTable}>
