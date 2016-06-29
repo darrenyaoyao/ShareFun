@@ -125,7 +125,6 @@ router.get('/getGroupList/:username', (req, res) => {
         groups.forEach(x => {
           tmpList.push(x.groupName);
         });
-        console.log(tmpList);
         res.json({ groupList: tmpList });
       });
     }).catch(() => {
@@ -151,9 +150,9 @@ router.post('/getGroupFriends', (req, res) => {
 
 router.get('/getDebtList/:username&&:groupName', (req, res) => {
   const debtList = [];
-  const count = [];
   Groups.findOneGroup(req.params.groupName)
   .then((group) => {
+    log(group);
     group.getGroupDebts()
     .then((debts) => {
       debts.forEach(x => {
@@ -163,26 +162,18 @@ router.get('/getDebtList/:username&&:groupName', (req, res) => {
           debtors.forEach(y => {
             debtorList.push({ debtor: y.debtor, money: y.money });
           });
-          console.log('~~~~~~~'); debtorList.forEach(z => { console.log(z); });
-          //return debtorList;
-        }).then(() => {
-          //console.log('1111'); debtorList.forEach(z => { console.log(z); });
-          debtList.push({ debtName: x.debt, creditor: x.creditor, debtorList });
-          console.log('/////'); debtList.forEach(z => { console.log(z); });
-          count.push(1);
-          if (count.length === debts.length) { res.json({ debtList }); }
+
+          console.log('~~~~~~~');
+          debtorList.forEach(z => { console.log(z); });
         });
+
+        debtList.push({ debtName: x.debt, creditor: x.creditor, debtorList });
       });
-
-      //console.log('##'); debtList.forEach(z => { console.log(z); });
-
- 
-      //console.log('!!!');
-      //debtList.forEach(w => { console.log(w); });
-    }).catch(() => {
+      console.log('!!!');
+      debtList.forEach(w => { console.log(w); });
       res.json({ debtList });
     });
-    //res.json({ debtList });
+    // res.json({ debtList });
   });
 });
 
@@ -247,34 +238,91 @@ const fakeRepay = [
 ];
 
 function debtslist(groupdebts) {
-  return Promise.map(groupdebts, groupdebt => groupdebt.getDebtDebtors())
-    .each(x => console.log(x));
+  return Promise.map(groupdebts, groupdebt => groupdebt.getDebtDebtors());
+}
+
+function flat(DebtDebtors) {
+  return new Promise((resolve) => {
+    const list = [];
+    DebtDebtors.forEach(x => {
+      list.push(x);
+    });
+    return resolve(list);
+  });
+}
+
+function debtcount(debtslist) {
+  console.log('debtcount');
+  return new Promise((resolve) => {
+    const debtrelation = {};
+    debtslist.forEach(debt => {
+      if (debtrelation[debt.creditor] === undefined) {
+        debtrelation[debt.creditor] = debt.money;
+      } else {
+        debtrelation[debt.creditor] += debt.money;
+      }
+      if (debtrelation[debt.debtor] === undefined) {
+        debtrelation[debt.debtor] = -debt.money;
+      } else {
+        debtrelation[debt.debtor] -= debt.money;
+      }
+    });
+    return resolve(debtrelation);
+  });
+}
+
+function debtgreedy(debtrelation) {
+  const drelation = debtrelation;
+  return new Promise((resolve) => {
+    const repayrelation = [];
+    for (var index in debtrelation) {
+      if (drelation[index] < 0) {
+        for (var i in drelation) {
+          if (drelation[i] > 0 && (drelation[index] + drelation[i]) <= 0) {
+            repayrelation.push({
+              creditor: i,
+              debtor: index,
+              money: drelation[i],
+            });
+            drelation[i] += drelation[index];
+            drelation[index] = 0;
+          } else if (drelation[i] > 0 && (drelation[index] + drelation[i]) > 0) {
+            repayrelation.push({
+              creditor: i,
+              debtor: index,
+              money: -drelation[i],
+            });
+            drelation[index] += drelation[i];
+            drelation[i] = 0;
+          }
+        }
+      }
+    }
+    return resolve(repayrelation);
+  });
+}
+
+function addrepay(repayrelations, groupname) {
+  return Promise.map(repayrelations,
+    repayrelation => GroupRepay.create({
+      group: groupname,
+      creditor: repayrelation.creditor,
+      debtor: repayrelation.debtor,
+      money: repayrelation.money,
+    }));
 }
 
 router.get('/getGroupRepay/:username&&:groupName', (req, res) => {
-  res.json({ groupRepay: fakeRepay });
   Groups.findOneGroup(req.params.groupName)
     .then(group => group.getGroupDebts())
     .then(GroupDebts => debtslist(GroupDebts))
-    .then(DebtDebtors => console.log(DebtDebtors));
+    .then(DebtDebtors => flat(DebtDebtors[0]))
+    .then(Debtlists => debtcount(Debtlists))
+    .then(debtrelation => debtgreedy(debtrelation))
+    .then(repayrelations => {
+      res.json({ groupRepay: repayrelations });
+      return addrepay(repayrelations, req.params.groupName);
+    });
 });
-
-function debtgreedy(debtcount) {
-  const credit = [];
-  const debt = [];
-  for (const index in debtcount) {
-    if (debtcount[index] > 0) {
-      credit.push({
-        name: index,
-        money: debtcount[index],
-      });
-    } else {
-      debt.push({
-        name: index,
-        money: debtcount[index],
-      });
-    }
-  }
-}
 
 module.exports = router;
