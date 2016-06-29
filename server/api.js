@@ -5,8 +5,12 @@ const router = new Router();
 const Users = require('./database/Users').User;
 const Groups = require('./database/Users').Group;
 const Friendlinks = require('./database/Friendlinks');
-const GroupDebtLinks = require('./database/GroupDebtLinks');
-const DebtDebtorLinks = require('./database/DebtDebtorLinks');
+const GroupDebt = require('./database/GroupDebtLinks');
+const DebtDebtor = require('./database/DebtDebtorLinks');
+
+const log = (inst) => {
+  console.dir(inst.get());
+};
 
 router.post('/login', (req, res) => {
   // code for discussion with db
@@ -32,7 +36,6 @@ router.post('/addFriend', (req, res) => {
   Users.findOne({
     where: { username: req.body.friendname },
   }).then((friend) => {
-
     Friendlinks.create({
       user_1: req.body.friendname,
       user_2: req.body.username,
@@ -73,22 +76,22 @@ router.post('/addDebt', (req, res) => {
 	// code for discussion with db
   Groups.findOneGroup(req.body.groupName)
     .then((group) => {
-      GroupDebtLinks.create({
+      GroupDebt.create({
         group: req.body.groupName,
         debt: req.body.debtContent.debtName,
-        creditor: req.body.debtContent.creditor,
-        time: req.body.debtContent.time,
-      }).then((groupDebtLink) => {
-        group.addGroupDebtLink(groupDebtLink);
-        for (const x in req.body.debtContent.debtorList) {
-          DebtDebtorLinks.create({
+        creditor: req.body.username,
+      }).then((groupDebt) => {
+        group.addGroupDebt(groupDebt);
+        req.body.debtContent.debtorList.forEach(x => {
+          DebtDebtor.create({
             debt: req.body.debtContent.debtName,
+            creditor: req.body.debtContent.creditor,
             debtor: x.debtor,
             money: x.money,
-          }).then((debtDebtorLink) => {
-            groupDebtLink.addDebtDebtorLink(debtDebtorLink);
+          }).then((debtDebtor) => {
+            groupDebt.addDebtDebtor(debtDebtor);
           });
-        }
+        });
       });
       res.json({ success: true });
     }).catch(() => {
@@ -150,27 +153,26 @@ router.get('/getDebtList/:username&&:groupName', (req, res) => {
   const debtList = [];
   Groups.findOneGroup(req.params.groupName)
   .then((group) => {
-    group.getGroupDebtLinks();
+    log(group);
+    group.getGroupDebts();
   }).then((debts) => {
     for (const x in debts) {
+      log(x);
       const debtorList = [];
-      x.getDebtDebtorLinks()
-       .then((debtors) => {
-         for (const y in debtors) {
-           debtorList.push({
-             debtor: y.debtor,
-             money: y.money,
-           });
-         }
-       });
-      debtList.push({
-        creditor: x.creditor,
-        debtName: x.debt,
-        time: x.time,
-        debtorList,
+      x.getDebtDebtors()
+      .then((debtors) => {
+        for (const y in debtors) {
+          log(y);
+          debtorList.push({ debtor: y.debtor, money: y.money });
+        }
+        debtList.push({
+          debtName: x.debt,
+          creditor: x.creditor,
+          debtorList,
+        });
       });
-    }
     res.json({ debtList });
+    }
   });
 });
 
