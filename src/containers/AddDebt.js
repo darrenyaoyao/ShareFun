@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import DebtList from '../components/AddDebt';
 
 const mapStateToProps = (state) => ({
-  groupFriends: state.groupFriends,
+  groupFriends: state.groupFriends.list,
   debtList: state.debtList.list,
   repayList: state.debtList.repayList,
   newDebt: state.newDebt,

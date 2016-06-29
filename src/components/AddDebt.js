@@ -1,5 +1,4 @@
 import React from 'react';
-import { addDebtor, resetNewDebt } from '../actions/newDebt';
 import { fetchAddDebt, fetchGetGroupRepay } from '../actions/debtList';
 import { RaisedButton, TextField } from 'material-ui';
 import { Table, TableBody, TableHeader,
@@ -7,11 +6,10 @@ import { Table, TableBody, TableHeader,
 import adddebt from './AddDebt.css';
 
 const DebtList = ({ dispatch, debtList,
-                    newDebt, username,
-                    groupName, repayList }) => {
+                    username, groupName,
+                    repayList, groupFriends }) => {
   let debtName;
-  let debtor;
-  let money;
+  const moneyRefs = [];
   return (
     <div>
       <RaisedButton
@@ -43,55 +41,50 @@ const DebtList = ({ dispatch, debtList,
       <form
         onSubmit={e => {
           e.preventDefault();
-          dispatch(fetchAddDebt('testName', 'testGroup', {
-            crditor: username,
+          const newDebt = [];
+          const len = groupFriends.length;
+          for (let i = 0; i < len; i++) {
+            if (moneyRefs[i].getValue()) {
+              newDebt.push({
+                debtor: groupFriends[i],
+                money: 1.0 * moneyRefs[i].getValue(),
+              });
+              moneyRefs[i].getInputNode().value = '';
+            }
+          }
+          dispatch(fetchAddDebt(username, groupName, {
+            creditor: username,
             debtName: debtName.getValue(),
             debtorList: newDebt,
           }));
           debtName.getInputNode().value = '';
-          dispatch(resetNewDebt());
         }}
       >
         DebtName: <TextField ref={x => { debtName = x; }} />
         <RaisedButton type="submit"> add debt </RaisedButton>
       </form>
-      <table>
-        <thead>
-          <tr>
-            <th> Name </th>
-            <th> Money </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td> <TextField ref={x => { debtor = x; }} /> </td>
-            <td> <TextField ref={x => { money = x; }} /> </td>
-            <RaisedButton
-              onClick={e => {
-                e.preventDefault();
-                dispatch(addDebtor({
-                  debtor: debtor.getValue(),
-                  money: money.getValue(),
-                }));
-                debtor.getInputNode().value = '';
-                money.getInputNode().value = '';
-              }}
-            > add
-            </RaisedButton>
-          </tr>
-          {newDebt.map(x => (
-            <tr>
-              <td> {x.debtor} </td>
-              <td> {x.money} </td>
-            </tr>
-           ))}
-        </tbody>
-      </table>
+      <Table>
+        <TableHeader displaySelectAll={false}>
+          <TableRow>
+            <TableHeaderColumn> Name </TableHeaderColumn>
+            <TableHeaderColumn> Money </TableHeaderColumn>
+            <TableHeaderColumn> {''} </TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false}>
+          {groupFriends.map(x => (
+            <TableRow>
+              <TableRowColumn>{x}</TableRowColumn>
+              <TableRowColumn> <TextField ref={y => { moneyRefs.push(y); }} /> </TableRowColumn>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
       <div className="debt-list">{
         debtList.map(x => (
-          <div>
-            <span className={adddebt.fontStyle}> Title:{x.debtName} </span>
-            <span> creditor: {x.creditor} </span>
+          <div className={adddebt.debtTable}>
+            <div className={adddebt.debtTitle}> Title:{x.debtName} </div>
+            <div className={adddebt.debtCreditor}> creditor: {x.creditor} </div>
             <Table>
               <TableHeader displaySelectAll={false}>
                 <TableRow>
@@ -120,7 +113,6 @@ DebtList.propTypes = {
   debtList: React.PropTypes.array,
   repayList: React.PropTypes.array,
   groupFriends: React.PropTypes.array,
-  newDebt: React.PropTypes.array,
   username: React.PropTypes.string,
   groupName: React.PropTypes.string,
 };
