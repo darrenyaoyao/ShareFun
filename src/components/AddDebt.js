@@ -68,14 +68,15 @@ const DebtList = ({ dispatch, debtList,
           <TableRow>
             <TableHeaderColumn> Name </TableHeaderColumn>
             <TableHeaderColumn> Money </TableHeaderColumn>
-            <TableHeaderColumn> {''} </TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
           {groupFriends.map(x => (
             <TableRow>
               <TableRowColumn>{x}</TableRowColumn>
-              <TableRowColumn> <TextField ref={y => { moneyRefs.push(y); }} /> </TableRowColumn>
+              <TextField
+                ref={y => { moneyRefs.push(y); }}
+              />
             </TableRow>
           ))}
         </TableBody>
