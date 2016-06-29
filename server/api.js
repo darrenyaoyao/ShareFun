@@ -10,9 +10,9 @@ const GroupRepay = require('./database/GroupRepay');
 const GroupDebt = require('./database/GroupDebtLinks');
 const DebtDebtor = require('./database/DebtDebtorLinks');
 
-const log = (inst) => {
-  console.dir(inst.get());
-};
+// const log = (inst) => {
+//  console.dir(inst.get());
+// };
 
 router.post('/login', (req, res) => {
   // code for discussion with db
@@ -155,6 +155,10 @@ router.get('/getDebtList/:username&&:groupName', (req, res) => {
     log(group);
     group.getGroupDebts()
     .then((debts) => {
+      if (debts.length === 0) {
+        // console.log('group has no debt');
+        res.json({ debtList });
+      }
       debts.forEach(x => {
         const debtorList = [];
         x.getDebtDebtors()
@@ -162,18 +166,22 @@ router.get('/getDebtList/:username&&:groupName', (req, res) => {
           debtors.forEach(y => {
             debtorList.push({ debtor: y.debtor, money: y.money });
           });
-
-          console.log('~~~~~~~');
-          debtorList.forEach(z => { console.log(z); });
+          // console.log('~~~~~~~'); debtorList.forEach(z => { console.log(z); });
+        }).then(() => {
+          // console.log('1111'); debtorList.forEach(z => { console.log(z); });
+          debtList.push({ debtName: x.debt, creditor: x.creditor, debtorList });
+          // console.log('/////'); debtList.forEach(z => { console.log(z); });
+          count.push(1);
+          if (count.length === debts.length) { res.json({ debtList }); }
         });
-
-        debtList.push({ debtName: x.debt, creditor: x.creditor, debtorList });
       });
-      console.log('!!!');
-      debtList.forEach(w => { console.log(w); });
+    })
+    .catch(() => {
       res.json({ debtList });
     });
-    // res.json({ debtList });
+  })
+  .catch(() => {
+    res.json({ debtList });
   });
 });
 
@@ -312,6 +320,24 @@ function addrepay(repayrelations, groupname) {
     }));
 }
 
+function repayfilter(repayrelations, username) {
+  const userrepay = [];
+  repayrelations.forEach(repayrelation => {
+    if (repayrelation.creditor === username) {
+      userrepay.push({
+        debtor: repayrelation.debtor,
+        money: repayrelation.money,
+      });
+    } else if (repayrelation.debtor === username) {
+      userrepay.push({
+        debtor: repayrelation.creditor,
+        money: -repayrelation.money,
+      });
+    }
+  });
+  return userrepay;
+}
+
 router.get('/getGroupRepay/:username&&:groupName', (req, res) => {
   Groups.findOneGroup(req.params.groupName)
     .then(group => group.getGroupDebts())
@@ -320,7 +346,7 @@ router.get('/getGroupRepay/:username&&:groupName', (req, res) => {
     .then(Debtlists => debtcount(Debtlists))
     .then(debtrelation => debtgreedy(debtrelation))
     .then(repayrelations => {
-      res.json({ groupRepay: repayrelations });
+      res.json({ groupRepay: repayfilter(repayrelations) });
       return addrepay(repayrelations, req.params.groupName);
     });
 });
