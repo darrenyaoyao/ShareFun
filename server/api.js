@@ -159,9 +159,9 @@ router.post('/getGroupFriends', (req, res) => {
 
 router.get('/getDebtList/:username&&:groupName', (req, res) => {
   const debtList = [];
+  const count = [];
   Groups.findOneGroup(req.params.groupName)
   .then((group) => {
-    log(group);
     group.getGroupDebts()
     .then((debts) => {
       if (debts.length === 0) {
@@ -355,7 +355,7 @@ router.get('/getGroupRepay/:username&&:groupName', (req, res) => {
     .then(Debtlists => debtcount(Debtlists))
     .then(debtrelation => debtgreedy(debtrelation))
     .then(repayrelations => {
-      res.json({ groupRepay: repayfilter(repayrelations) });
+      res.json({ groupRepay: repayfilter(repayrelations, req.params.username) });
       return addrepay(repayrelations, req.params.groupName);
     });
 });
