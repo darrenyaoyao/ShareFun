@@ -12,9 +12,10 @@ import addfriendcss from './AddFriend.css';
 
 const mapStateToProps = (state) => ({
   username: state.login.username,
+  err: state.friendList.err,
 });
 
-const AddFriend = ({ dispatch, username }) => {
+const AddFriend = ({ dispatch, username, err }) => {
   let input;
   const addfriendstyle = {
     hintStyle: {
@@ -47,6 +48,9 @@ const AddFriend = ({ dispatch, username }) => {
             hintText="Add Friend"
             hintStyle={addfriendstyle.hintStyle}
             inputStyle={addfriendstyle.InputStyle}
+            errorText={(err === 1) ? 'no such user' :
+                ((err === 0) ? '' : ((err === 2) ?
+                'already friend' : 'do not add yourself'))}
             ref={x => { input = x; }}
           />
           <IconButton
@@ -64,6 +68,7 @@ const AddFriend = ({ dispatch, username }) => {
 AddFriend.propTypes = {
   dispatch: React.PropTypes.func,
   username: React.PropTypes.string,
+  err: React.PropTypes.number,
 };
 
 const AddFriendContainer = connect(mapStateToProps)(AddFriend);
