@@ -4,7 +4,7 @@ import { setDisplay } from '../actions/index';
 import { fetchGetFriendList } from '../actions/friendList';
 import { fetchGetGroupList, changeActiveGroup } from '../actions/groupList';
 import { fetchGetGroupFriends, resetGroupFriends } from '../actions/groupFriends';
-import { fetchGetDebtList } from '../actions/debtList';
+import { fetchGetDebtList, fetchGetGroupRepay } from '../actions/debtList';
 import App from '../components/App';
 
 
@@ -29,6 +29,7 @@ const mapDispatchToProps = (dispatch) => ({
   clickGroup: (username, groupName) => {
     dispatch(fetchGetGroupFriends(username, groupName));
     dispatch(fetchGetDebtList(username, groupName));
+    dispatch(fetchGetGroupRepay(username, groupName));
     dispatch(changeActiveGroup(groupName));
   },
   fetchGetGroupList: (username) => {

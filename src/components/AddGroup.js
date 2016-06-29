@@ -5,9 +5,9 @@ import { addGroupFriend,
          resetGroupFriends,
          errorGroupFriend } from '../actions/groupFriends';
 import { RaisedButton, TextField } from 'material-ui';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import ContentAddBox from 'material-ui/svg-icons/content/add-box';
+import IconButton from 'material-ui/IconButton';
+import ContentAdd from 'material-ui/svg-icons/content/add-box';
+import GroupAdd from 'material-ui/svg-icons/social/group-add';
 import { Row, Col } from 'react-flexbox-grid';
 import { List, ListItem } from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
@@ -41,7 +41,8 @@ const AddGroup = ({ dispatch, groupFriends, username, friendList, groupList, err
           <RaisedButton
             type="submit"
             primary
-            icon={<ContentAddBox />}
+            icon={<GroupAdd />}
+            style={addgroupcss.addGroupButton}
           >
           {'Create Group '}
           </RaisedButton> <br />
@@ -74,14 +75,14 @@ const AddGroup = ({ dispatch, groupFriends, username, friendList, groupList, err
             ref={(x) => { friendName = x; }}
             errorText={err[0]}
           />
-          <FloatingActionButton
+          <IconButton
             type="submit"
             primary
             mini
-            className={addgroupcss.addGroupButton}
+            style={{ marginLeft: -50 }}
           >
             <ContentAdd />
-          </FloatingActionButton>
+          </IconButton>
         </Row>
       </form>
       <List>{friendList.map(x => (

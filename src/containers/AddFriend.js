@@ -4,7 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { TextField } from 'material-ui';
 import IconButton from 'material-ui/IconButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import { Grid } from 'react-flexbox-grid';
 import { fetchAddFriend } from '../actions/friendList';
 import { grey50, orange500, blue500 } from 'material-ui/styles/colors';
@@ -51,10 +51,9 @@ const AddFriend = ({ dispatch, username }) => {
           />
           <IconButton
             type="submit"
-            primary
             className={addfriendcss.addfriend_button}
           >
-            <ContentAdd />
+            <PersonAdd />
           </IconButton>
         </form>
       </Grid>
