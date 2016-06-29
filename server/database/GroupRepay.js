@@ -9,13 +9,13 @@ const GroupRepay = sequelize.define('groupRepay', {
   money: Sequelize.INTEGER,
 });
 
-Group.hasMany(Grouprepay, { foreignKey: 'group_id' });
+Group.hasMany(GroupRepay, { foreignKey: 'group_id' });
 
-Grouprepay.sync().then(() => {
+GroupRepay.sync().then(() => {
   // Table created
   console.log('Create friendlink table successfully.');
 }).catch((err) => {
   console.log('Create friendlink table fail: ', err);
 });
 
-module.exports = Grouprepay;
+module.exports = GroupRepay;

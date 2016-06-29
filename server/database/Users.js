@@ -4,9 +4,11 @@ const sequelize = require('../database');
 const User = sequelize.define('user', {
   username: {
     type: Sequelize.STRING,
+    allowNull: false,
   },
   password: {
     type: Sequelize.STRING,
+    allowNull: false,
   },
 }, {
   classMethods: {
@@ -21,6 +23,7 @@ const User = sequelize.define('user', {
 const Group = sequelize.define('group', {
   groupName: {
     type: Sequelize.STRING,
+    allowNull: false,
   },
 }, {
   classMethods: {

@@ -38,6 +38,7 @@ const Login = ({ dispatch, err }) => {
                 password : <TextField
                   ref={x => { password = x; }}
                   errorText={err ? 'invalid password' : ''}
+                  type="password"
                 />
               </Row>
               <RaisedButton primary type="submit" style={buttonstyle} >
