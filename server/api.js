@@ -8,9 +8,9 @@ const Friendlinks = require('./database/Friendlinks');
 const GroupDebt = require('./database/GroupDebtLinks');
 const DebtDebtor = require('./database/DebtDebtorLinks');
 
-const log = (inst) => {
-  console.dir(inst.get());
-};
+// const log = (inst) => {
+//  console.dir(inst.get());
+// };
 
 router.post('/login', (req, res) => {
   // code for discussion with db
@@ -154,6 +154,10 @@ router.get('/getDebtList/:username&&:groupName', (req, res) => {
   .then((group) => {
     group.getGroupDebts()
     .then((debts) => {
+      if (debts.length === 0) {
+        // console.log('group has no debt');
+        res.json({ debtList });
+      }
       debts.forEach(x => {
         const debtorList = [];
         x.getDebtDebtors()
@@ -161,26 +165,22 @@ router.get('/getDebtList/:username&&:groupName', (req, res) => {
           debtors.forEach(y => {
             debtorList.push({ debtor: y.debtor, money: y.money });
           });
-          console.log('~~~~~~~'); debtorList.forEach(z => { console.log(z); });
-          //return debtorList;
+          // console.log('~~~~~~~'); debtorList.forEach(z => { console.log(z); });
         }).then(() => {
-          //console.log('1111'); debtorList.forEach(z => { console.log(z); });
+          // console.log('1111'); debtorList.forEach(z => { console.log(z); });
           debtList.push({ debtName: x.debt, creditor: x.creditor, debtorList });
-          console.log('/////'); debtList.forEach(z => { console.log(z); });
+          // console.log('/////'); debtList.forEach(z => { console.log(z); });
           count.push(1);
           if (count.length === debts.length) { res.json({ debtList }); }
         });
       });
-
-      //console.log('##'); debtList.forEach(z => { console.log(z); });
-
- 
-      //console.log('!!!');
-      //debtList.forEach(w => { console.log(w); });
-    }).catch(() => {
+    })
+    .catch(() => {
       res.json({ debtList });
     });
-    //res.json({ debtList });
+  })
+  .catch(() => {
+    res.json({ debtList });
   });
 });
 
