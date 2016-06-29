@@ -123,6 +123,7 @@ router.get('/getGroupList/:username', (req, res) => {
         groups.forEach(x => {
           tmpList.push(x.groupName);
         });
+        console.log(tmpList);
         res.json({ groupList: tmpList });
       });
     }).catch(() => {
@@ -161,6 +162,7 @@ router.get('/getDebtList/:username&&:groupName', (req, res) => {
             debtorList.push({ debtor: y.debtor, money: y.money });
           });
           console.log('~~~~~~~'); debtorList.forEach(z => { console.log(z); });
+          //return debtorList;
         }).then(() => {
           //console.log('1111'); debtorList.forEach(z => { console.log(z); });
           debtList.push({ debtName: x.debt, creditor: x.creditor, debtorList });
@@ -169,10 +171,9 @@ router.get('/getDebtList/:username&&:groupName', (req, res) => {
           if (count.length === debts.length) { res.json({ debtList }); }
         });
       });
-      //return debtList;
+
       //console.log('##'); debtList.forEach(z => { console.log(z); });
 
-      //res.json({ debtList });
  
       //console.log('!!!');
       //debtList.forEach(w => { console.log(w); });

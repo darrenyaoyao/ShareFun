@@ -51,7 +51,7 @@ export const fetchGetDebtList = function fetchGetDebtList(username, groupName) {
     })
       .then(res => res.json())
       .then(json => {
-        // console.log(json.debtList.debtName);
+        console.log(json.debtList);
         dispatch(receiveGetDebtList(json.debtList));
       });
   };
