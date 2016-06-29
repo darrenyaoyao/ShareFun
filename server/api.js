@@ -125,6 +125,7 @@ router.get('/getGroupList/:username', (req, res) => {
         groups.forEach(x => {
           tmpList.push(x.groupName);
         });
+        console.log(tmpList);
         res.json({ groupList: tmpList });
       });
     }).catch(() => {
@@ -150,9 +151,9 @@ router.post('/getGroupFriends', (req, res) => {
 
 router.get('/getDebtList/:username&&:groupName', (req, res) => {
   const debtList = [];
+  const count = [];
   Groups.findOneGroup(req.params.groupName)
   .then((group) => {
-    log(group);
     group.getGroupDebts()
     .then((debts) => {
       debts.forEach(x => {
@@ -162,18 +163,26 @@ router.get('/getDebtList/:username&&:groupName', (req, res) => {
           debtors.forEach(y => {
             debtorList.push({ debtor: y.debtor, money: y.money });
           });
-
-          console.log('~~~~~~~');
-          debtorList.forEach(z => { console.log(z); });
+          console.log('~~~~~~~'); debtorList.forEach(z => { console.log(z); });
+          //return debtorList;
+        }).then(() => {
+          //console.log('1111'); debtorList.forEach(z => { console.log(z); });
+          debtList.push({ debtName: x.debt, creditor: x.creditor, debtorList });
+          console.log('/////'); debtList.forEach(z => { console.log(z); });
+          count.push(1);
+          if (count.length === debts.length) { res.json({ debtList }); }
         });
-
-        debtList.push({ debtName: x.debt, creditor: x.creditor, debtorList });
       });
-      console.log('!!!');
-      debtList.forEach(w => { console.log(w); });
+
+      //console.log('##'); debtList.forEach(z => { console.log(z); });
+
+ 
+      //console.log('!!!');
+      //debtList.forEach(w => { console.log(w); });
+    }).catch(() => {
       res.json({ debtList });
     });
-    // res.json({ debtList });
+    //res.json({ debtList });
   });
 });
 
