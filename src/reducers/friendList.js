@@ -12,7 +12,7 @@ const friendList = (state = {
       return Object.assign({}, state, {
         isFetching: false,
         err: action.err,
-        list: [...state.friendList, action.friendname],
+        list: [...state.list, action.friendname],
       });
     case 'REQUEST_GET_FRIEND_LIST':
       return Object.assign({}, state, {

@@ -73,11 +73,13 @@ const DebtList = ({ dispatch, debtList,
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
             {groupFriends.map(x => (
-              <TableRow>
+              <TableRow selectable={false}>
                 <TableRowColumn>{x}</TableRowColumn>
-                <TextField
-                  ref={y => { moneyRefs.push(y); }}
-                />
+                <TableRowColumn>
+                  <TextField
+                    ref={y => { moneyRefs.push(y); }}
+                  />
+                </TableRowColumn>
               </TableRow>
             ))}
           </TableBody>
