@@ -3,8 +3,8 @@ const sequelize = require('../database');
 const User = require('./Users').User;
 
 const FriendLink = sequelize.define('friendlink', {
-  user_1: Sequelize.STRING,
-  user_2: Sequelize.STRING,
+  user_1: { type: Sequelize.STRING, unique: 'Friends' },
+  user_2: { type: Sequelize.STRING, unique: 'Friends' },
 });
 
 User.hasMany(FriendLink, { foreignKey: 'user_1_id' });
