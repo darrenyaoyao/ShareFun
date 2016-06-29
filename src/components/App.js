@@ -18,7 +18,6 @@ export default class App extends Component {
     this.props.fetchGetFriendList(this.props.username);
   }
   mapToFriend(friendObj) {
-    console.log(friendObj);
     return (
       /*
       <li key={friendObj} className="list-group-item indent1">
@@ -36,7 +35,6 @@ export default class App extends Component {
   }
   mapToGroup(groupName) {
     const { username, clickGroup } = this.props;
-    console.log(groupName);
     return (
       /*
       <li key={groupName} className="list-group-item indent2">

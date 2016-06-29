@@ -4,9 +4,18 @@ const sequelize = require('../database');
 const Group = require('./Users').Group;
 
 const GroupDebt = sequelize.define('groupDebt', {
-  group: Sequelize.STRING,
-  debt: Sequelize.STRING,
-  creditor: Sequelize.STRING,
+  group: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  debt: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  creditor: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
 });
 
 Group.hasMany(GroupDebt, { foreignKey: 'group_id' });

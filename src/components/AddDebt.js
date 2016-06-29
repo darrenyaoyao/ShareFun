@@ -44,7 +44,7 @@ const DebtList = ({ dispatch, debtList,
         onSubmit={e => {
           e.preventDefault();
           dispatch(fetchAddDebt(username, groupName, {
-            crditor: username,
+            creditor: username,
             debtName: debtName.getValue(),
             debtorList: newDebt,
           }));
