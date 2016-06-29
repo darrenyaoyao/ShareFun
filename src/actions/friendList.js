@@ -8,7 +8,7 @@ export const requestAddFriend = (friendname) => ({
 export const receiveAddFriend = (json, friendname) => ({
   type: 'RECEIVE_ADD_FRIEND',
   friendname,
-  err: !json.success,
+  err: json.err,
 });
 
 export const fetchAddFriend = (username, friendname) => (
