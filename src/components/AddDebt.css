@@ -5,4 +5,20 @@
 .fontStyle{
   font-family:'Muli';
 }
-
+.debtTitle{
+  font-size: 25px;
+  font-family:'Muli';
+}
+.debtCreditor{
+  text-align: right;
+}
+.debtTable{
+  border: solid 1px green;
+  border-radius: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 10px;
+}
+.moneyInput{
+  background-color:yellow;
+}

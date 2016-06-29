@@ -5,7 +5,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { FlatButton } from 'material-ui';
 import { List, ListItem } from 'material-ui/List';
-import ActionGrade from 'material-ui/svg-icons/action/grade';
+import Person from 'material-ui/svg-icons/social/person';
+import Group from 'material-ui/svg-icons/social/group';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -19,44 +20,29 @@ export default class App extends Component {
   }
   mapToFriend(friendObj) {
     return (
-      /*
-      <li key={friendObj} className="list-group-item indent1">
-        <button className="btn btn-link">
-          {friendObj}
-        </button>
-      </li>*/
       <ListItem
         id={appcss.listitem}
         key={friendObj}
         primaryText={friendObj}
-        leftIcon={<ActionGrade />}
+        leftIcon={<Person />}
       />
 		);
   }
   mapToGroup(groupName) {
     const { username, clickGroup } = this.props;
     return (
-      /*
-      <li key={groupName} className="list-group-item indent2">
-        <button
-          onClick={clickGroup.bind(this, username, groupName)}
-          className="btn btn-link"
-        >
-          {groupName}
-        </button>
-      </li>*/
       <ListItem
         id={appcss.listitem}
         key={groupName}
         primaryText={groupName}
-        leftIcon={<ActionGrade />}
+        leftIcon={<Group />}
         onClick={clickGroup.bind(this, username, groupName)}
       />
     );
   }
   render() {
     const { username, friendList, groupList,
-            clickFList, clickRepay, clickAddGroup } = this.props;
+            clickRepay, clickAddGroup } = this.props;
     const buttonstyle = {
       margin: 12,
     };
