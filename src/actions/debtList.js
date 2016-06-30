@@ -30,6 +30,11 @@ export const fetchAddDebt = function fetchAddDebt(username, groupName, debtConte
   };
 };
 
+export const errorAddDebt = (errorMessage) => ({
+  type: 'ERROR_ADD_DEBT',
+  payload: errorMessage,
+});
+
 export const requestGetDebtList = () => ({
   type: 'REQUEST_GET_DEBT_LIST',
 });
@@ -51,7 +56,6 @@ export const fetchGetDebtList = function fetchGetDebtList(username, groupName) {
     })
       .then(res => res.json())
       .then(json => {
-        console.log(json.debtList);
         dispatch(receiveGetDebtList(json.debtList));
       });
   };
