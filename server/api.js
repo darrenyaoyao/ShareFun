@@ -176,7 +176,13 @@ router.get('/getDebtList/:username&&:groupName', (req, res) => {
           // console.log('~~~~~~~'); debtorList.forEach(z => { console.log(z); });
         }).then(() => {
           // console.log('1111'); debtorList.forEach(z => { console.log(z); });
-          debtList.push({ debtName: x.debt, creditor: x.creditor, debtorList });
+          console.log(typeof(x.createdAt));
+          debtList.push({
+            debtName: x.debt,
+            createdAt: x.createdAt,
+            creditor: x.creditor,
+            debtorList,
+          });
           // console.log('/////'); debtList.forEach(z => { console.log(z); });
           count.push(1);
           if (count.length === debts.length) { res.json({ debtList }); }

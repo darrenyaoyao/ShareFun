@@ -12,6 +12,9 @@
 .debtCreditor{
   text-align: right;
 }
+.debtCreateAt{
+  text-align: right;
+}
 .debtTable{
   border: solid 1px green;
   border-radius: 15px;

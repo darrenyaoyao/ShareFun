@@ -75,7 +75,6 @@ const DebtList = ({ dispatch, debtList,
           const newDebt = [];
           const len = groupFriends.length;
           if (!debtName.getValue()) {
-            console.log('debtName is empty');
             dispatch(errorAddDebt('Debt name is needed!'));
             return;
           }
@@ -93,6 +92,10 @@ const DebtList = ({ dispatch, debtList,
               moneyRefs[i].getInputNode().value = '';
             }
           }
+          if (newDebt.length === 0) {
+            dispatch(errorAddDebt('Can not create an empty debt.'));
+            return;
+          }
           dispatch(fetchAddDebt(username, groupName, {
             creditor: username,
             debtName: debtName.getValue(),
@@ -109,6 +112,9 @@ const DebtList = ({ dispatch, debtList,
           <div className={adddebt.debtTable}>
             <div className={adddebt.debtTitle}> Title:{x.debtName} </div>
             <div className={adddebt.debtCreditor}> creditor: {x.creditor} </div>
+            <div className={adddebt.debtCreateAt}>
+              {x.createdAt.slice(0, 9)} {x.createdAt.slice(11, 16)}
+            </div>
             <Table>
               <TableHeader displaySelectAll={false}>
                 <TableRow>
