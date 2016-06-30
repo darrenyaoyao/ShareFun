@@ -97,8 +97,11 @@ const DebtList = ({ dispatch, debtList,
             dispatch(errorAddDebt('Can not create an empty debt.'));
             return;
           }
+          const now = new Date();
           dispatch(fetchAddDebt(username, groupName, {
             creditor: username,
+            createdAt:
+             `${now.getFullYear()}-${now.getMonth()}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`,
             debtName: debtName.getValue(),
             debtorList: newDebt,
           }));

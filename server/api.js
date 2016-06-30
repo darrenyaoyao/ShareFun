@@ -9,7 +9,10 @@ const Friendlinks = require('./database/Friendlinks');
 const GroupRepay = require('./database/GroupRepay');
 const GroupDebt = require('./database/GroupDebtLinks');
 const DebtDebtor = require('./database/DebtDebtorLinks');
-
+//import bcrypt from 'bcrypt';
+//const saltRounds = 10;
+//const myPlaintextPassword = 's0/\/\P4$$w0rD';
+//const someOtherPlaintextPassword = 'not_bacon';
 // const log = (inst) => {
 //  console.dir(inst.get());
 // };
