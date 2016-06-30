@@ -1,6 +1,5 @@
 /* eslint react/jsx-no-bind: 0*/
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { FlatButton } from 'material-ui';
@@ -42,7 +41,7 @@ export default class App extends Component {
   }
   render() {
     const { username, friendList, groupList,
-            clickRepay, clickAddGroup } = this.props;
+            clickRepay, clickAddGroup, clickLogOut } = this.props;
     const buttonstyle = {
       margin: 12,
     };
@@ -55,14 +54,13 @@ export default class App extends Component {
             </Col>
             <Col xs={0} sm={4} md={6} lg={6} />
             <Col xs={6} sm={4} md={3} lg={3}>
-              <Link to="/Login">
-                <FlatButton
-                  style={buttonstyle}
-                  backgroundColor="#FAFAFA"
-                  hoverColor="#E0E0E0"
-                  label="Log out"
-                />
-              </Link>
+              <FlatButton
+                style={buttonstyle}
+                backgroundColor="#FAFAFA"
+                hoverColor="#E0E0E0"
+                label="Log out"
+                onClick={clickLogOut}
+              />
               <a> {username} </a>
             </Col>
           </Row>
@@ -94,6 +92,7 @@ App.propTypes = {
   clickGroup: React.PropTypes.func,
   clickAddGroup: React.PropTypes.func,
   clickRepay: React.PropTypes.func,
+  clickLogOut: React.PropTypes.func,
   children: React.PropTypes.any,
   fetchGetGroupList: React.PropTypes.func,
   fetchGetFriendList: React.PropTypes.func,

@@ -32,6 +32,12 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchGetGroupRepay(username, groupName));
     dispatch(changeActiveGroup(groupName));
   },
+  clickLogOut: () => {
+    dispatch({
+      type: 'LOG_OUT',
+    });
+    dispatch(push('/Login'));
+  },
   fetchGetGroupList: (username) => {
     dispatch(fetchGetGroupList(username));
   },

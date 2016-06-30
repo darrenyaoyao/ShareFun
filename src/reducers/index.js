@@ -19,4 +19,11 @@ const app = combineReducers({
   repayList,
 });
 
-export default app;
+const rootReducer = (state, action) => {
+  if (action.type === 'LOG_OUT') {
+    return app(undefined, action);
+  }
+  return app(state, action);
+};
+
+export default rootReducer;

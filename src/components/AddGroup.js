@@ -27,7 +27,10 @@ const AddGroup = ({ dispatch, groupFriends, username, friendList, groupList, err
       <form
         onSubmit={e => {
           e.preventDefault();
-          if (!groupName.getValue()) { return; }
+          if (!groupName.getValue()) {
+            dispatch(errorAddGroup('Group name is needed.'));
+            return;
+          }
           if (groupList.filter(x => x === groupName.getValue()).length !== 0) {
             dispatch(errorAddGroup(`${groupName.getValue()} already exists!`));
             return;
