@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchAddDebt, fetchGetGroupRepay } from '../actions/debtList';
+import { fetchAddDebt, fetchGetGroupRepay, errorAddDebt } from '../actions/debtList';
 import { RaisedButton, TextField } from 'material-ui';
 import { Table, TableBody, TableHeader,
          TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
@@ -7,7 +7,7 @@ import adddebt from './AddDebt.css';
 
 const DebtList = ({ dispatch, debtList,
                     username, groupName,
-                    repayList, groupFriends }) => {
+                    repayList, groupFriends, errorMessage }) => {
   let debtName;
   const moneyRefs = [];
   return (
@@ -38,13 +38,54 @@ const DebtList = ({ dispatch, debtList,
         </Table>
         <br />
       </div>
+
+      <TextField
+        hintText="title of debt"
+        floatingLabelText="title of debt"
+        errorText={errorMessage}
+        ref={x => { debtName = x; }}
+      />
+      <Table>
+        <TableHeader displaySelectAll={false}>
+          <TableRow>
+            <TableHeaderColumn> Name </TableHeaderColumn>
+            <TableHeaderColumn> Money </TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false}>
+          {groupFriends.map(x => (
+            <TableRow selectable={false}>
+              <TableRowColumn>{x}</TableRowColumn>
+              <TableRowColumn>
+                <TextField
+                  ref={y => { moneyRefs.push(y); }}
+                  onBlur={e => {
+                    e.preventDefault();
+                    if (!isFinite(e.target.value)) { console.log(8); }
+                  }}
+                />
+              </TableRowColumn>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
       <form
         onSubmit={e => {
           e.preventDefault();
           const newDebt = [];
           const len = groupFriends.length;
+          if (!debtName.getValue()) {
+            console.log('debtName is empty');
+            dispatch(errorAddDebt('Debt name is needed!'));
+            return;
+          }
           for (let i = 0; i < len; i++) {
             if (moneyRefs[i].getValue()) {
+              if (!isFinite(moneyRefs[i].getValue())) {
+                moneyRefs[i].getInputNode().value = '';
+                dispatch(errorAddDebt('Money should be integer!'));
+                return;
+              }
               newDebt.push({
                 debtor: groupFriends[i],
                 money: 1.0 * moneyRefs[i].getValue(),
@@ -60,32 +101,9 @@ const DebtList = ({ dispatch, debtList,
           debtName.getInputNode().value = '';
         }}
       >
-        <TextField
-          hintText="title of debt"
-          ref={x => { debtName = x; }}
-        />
-        <Table>
-          <TableHeader displaySelectAll={false}>
-            <TableRow>
-              <TableHeaderColumn> Name </TableHeaderColumn>
-              <TableHeaderColumn> Money </TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false}>
-            {groupFriends.map(x => (
-              <TableRow selectable={false}>
-                <TableRowColumn>{x}</TableRowColumn>
-                <TableRowColumn>
-                  <TextField
-                    ref={y => { moneyRefs.push(y); }}
-                  />
-                </TableRowColumn>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
         <RaisedButton primary type="submit"> add debt </RaisedButton>
       </form>
+
       <div className="debt-list">{
         debtList.map(x => (
           <div className={adddebt.debtTable}>
@@ -121,6 +139,7 @@ DebtList.propTypes = {
   groupFriends: React.PropTypes.array,
   username: React.PropTypes.string,
   groupName: React.PropTypes.string,
+  errorMessage: React.PropTypes.string,
 };
 
 export default DebtList;
