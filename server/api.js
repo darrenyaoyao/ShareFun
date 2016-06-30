@@ -9,10 +9,9 @@ const Friendlinks = require('./database/Friendlinks');
 const GroupRepay = require('./database/GroupRepay');
 const GroupDebt = require('./database/GroupDebtLinks');
 const DebtDebtor = require('./database/DebtDebtorLinks');
-//import bcrypt from 'bcrypt';
-//const saltRounds = 10;
-//const myPlaintextPassword = 's0/\/\P4$$w0rD';
-//const someOtherPlaintextPassword = 'not_bacon';
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 // const log = (inst) => {
 //  console.dir(inst.get());
 // };
@@ -21,16 +20,23 @@ router.post('/login', (req, res) => {
   // code for discussion with db
   Users.findOneuser(req.body.username)
   .then((user) => {
-    if (user.password === req.body.password) {
-      res.json({ success: true });
-    } else {
-      res.json({ success: false });
-    }
+    bcrypt.compare(req.body.password, user.password, (err, resP) => {
+      if (resP) {
+        res.json({ success: true });
+      } else {
+        res.json({ success: false });
+      }
+    });
   }).catch(() => {
     res.json({ success: true });
-    Users.create({
-      username: req.body.username,
-      password: req.body.password,
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+      bcrypt.hash(req.body.password, salt, (err2, hash) => {
+        // Store hash in your password DB.
+        Users.create({
+          username: req.body.username,
+          password: hash,
+        });
+      });
     });
   });
 });
