@@ -114,7 +114,7 @@ const DebtList = ({ dispatch, debtList,
             <div className={adddebt.debtTitle}> {x.debtName} </div>
             <div className={adddebt.debtCreditor}> creditor: {x.creditor} </div>
             <div className={adddebt.debtCreateAt}>
-              {x.createdAt.slice(0, 9)} {x.createdAt.slice(11, 16)}
+              {x.createdAt.slice(0, 10)} {x.createdAt.slice(11, 16)}
             </div>
             <Table>
               <TableHeader displaySelectAll={false}>
