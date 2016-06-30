@@ -23,6 +23,7 @@
     "morgan": "^1.7.0",
     "mysql": "^2.11.1",
     "node-sass": "^3.8.0",
+    "promise": "^7.1.1",
     "proxy-middleware": "^0.15.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",

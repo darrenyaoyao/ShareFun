@@ -16,10 +16,10 @@
   text-align: right;
 }
 .debtTable{
-  border: solid 1px green;
-  border-radius: 15px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  /*border-top: solid 1px green;*/
+  border-bottom: solid 1px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   padding: 10px;
 }
 .moneyInput{

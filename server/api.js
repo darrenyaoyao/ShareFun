@@ -2,9 +2,11 @@
 /* eslint guard-for-in: 0*/
 const Router = require('express').Router;
 const router = new Router();
+const Promise = require('bluebird');
 const Users = require('./database/Users').User;
 const Groups = require('./database/Users').Group;
 const Friendlinks = require('./database/Friendlinks');
+const GroupRepay = require('./database/GroupRepay');
 const GroupDebt = require('./database/GroupDebtLinks');
 const DebtDebtor = require('./database/DebtDebtorLinks');
 
@@ -258,8 +260,136 @@ const fakeRepay = [
   { debtor: 'user2', money: 80 },
 ];
 
+function getdebtslist(groupdebts) {
+  console.log("getdebtslist", groupdebts);
+  return Promise.map(groupdebts, groupdebt => groupdebt.getDebtDebtors());
+}
+
+function flat(DebtDebtors) {
+  console.log('flat', DebtDebtors);
+  return new Promise((resolve) => {
+    const debt = [];
+    DebtDebtors.forEach(x => {
+      x.forEach(y => {
+        debt.push(y);
+      });
+    });
+    return resolve(debt);
+  });
+}
+
+function flat2(debts) {
+  console.log('flat2', debts);
+  return new Promise((resolve) => {
+    const list = [];
+    debts.forEach(x => {
+      list.push(x);
+    });
+    return resolve(list);
+  });
+}
+
+function debtcount(debtslist) {
+  console.log("debtcount", debtslist);
+  return new Promise((resolve) => {
+    const debtrelation = {};
+    debtslist.forEach(debt => {
+      if (debtrelation[debt.creditor] === undefined) {
+        debtrelation[debt.creditor] = debt.money;
+      } else {
+        debtrelation[debt.creditor] += debt.money;
+      }
+      if (debtrelation[debt.debtor] === undefined) {
+        debtrelation[debt.debtor] = -debt.money;
+      } else {
+        debtrelation[debt.debtor] -= debt.money;
+      }
+    });
+    return resolve(debtrelation);
+  });
+}
+
+function debtgreedy(debtrelation) {
+  const drelation = debtrelation;
+  console.log("debtrelation", debtrelation);
+  return new Promise((resolve) => {
+    const repayrelation = [];
+    for (var index in drelation) {
+      console.log(index, drelation[index]);
+      if (drelation[index] < 0) { //欠錢的人
+        for (var i in drelation) {
+          if (drelation[i] > 0 && (drelation[index] + drelation[i]) <= 0) {
+            console.log(i, drelation[i]);
+            repayrelation.push({
+              creditor: i,
+              debtor: index,
+              money: drelation[i],
+            });
+            drelation[index] += drelation[i];
+            drelation[i] = 0;
+          } else if (drelation[i] > 0 && (drelation[index] + drelation[i]) > 0) {
+            console.log(i, drelation[i]);
+            repayrelation.push({
+              creditor: i,
+              debtor: index,
+              money: -drelation[index],
+            });
+            drelation[i] += drelation[index];
+            drelation[index] = 0;
+          }
+        }
+      }
+    }
+    return resolve(repayrelation);
+  });
+}
+
+function addrepay(repayrelations, groupname) {
+  console.log("addrepay", repayrelations);
+  return Promise.map(repayrelations,
+    repayrelation => GroupRepay.create({
+      group: groupname,
+      creditor: repayrelation.creditor,
+      debtor: repayrelation.debtor,
+      money: repayrelation.money,
+    }));
+}
+
+function repayfilter(repayrelations, username) {
+  console.log("repayfilter", repayrelations);
+  const userrepay = [];
+  repayrelations.forEach(repayrelation => {
+    if (repayrelation.creditor === username) {
+      userrepay.push({
+        debtor: repayrelation.debtor,
+        money: repayrelation.money,
+      });
+    } else if (repayrelation.debtor === username) {
+      userrepay.push({
+        debtor: repayrelation.creditor,
+        money: -repayrelation.money,
+      });
+    }
+  });
+  return userrepay;
+}
+
 router.get('/getGroupRepay/:username&&:groupName', (req, res) => {
-  res.json({ groupRepay: fakeRepay });
+  Groups.findOneGroup(req.params.groupName)
+    .then(group => group.getGroupDebts())
+    .then(GroupDebts => getdebtslist(GroupDebts))
+    .then(DebtDebtors => flat(DebtDebtors))
+    .then(Debts => flat2(Debts))
+    .then(Debtlists => debtcount(Debtlists))
+    .then(debtrelation => debtgreedy(debtrelation))
+    .then(repayrelations => {
+      res.json({ groupRepay: repayfilter(repayrelations, req.params.username) });
+      return addrepay(repayrelations, req.params.groupName);
+    })
+    .catch(emptylist => {
+      console.log('Group donot have debtslisy', emptylist);
+      res.json({ groupRepay: [] });
+    });
 });
 
 module.exports = router;

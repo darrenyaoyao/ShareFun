@@ -12,10 +12,12 @@ const DebtList = ({ dispatch, debtList,
   const moneyRefs = [];
   return (
     <div>
-      <RaisedButton
-        primary
-        onMouseDown={() => { dispatch(fetchGetGroupRepay(username, groupName)); }}
-      > settle debt </RaisedButton>
+      <div>
+        <RaisedButton
+          primary
+          onMouseDown={() => { dispatch(fetchGetGroupRepay(username, groupName)); }}
+        > settle debt </RaisedButton>
+      </div>
       <div hidden={repayList.length === 0}>
         <h3 className={adddebt.fontStyle}> Summay of Debt </h3>
         <Table>
@@ -28,7 +30,7 @@ const DebtList = ({ dispatch, debtList,
           <TableBody displayRowCheckbox={false}>
           {
             repayList.map((x) => (
-              <TableRow>
+              <TableRow selectable={false}>
                 <TableRowColumn>{x.debtor}</TableRowColumn>
                 <TableRowColumn>{x.money}</TableRowColumn>
               </TableRow>
@@ -61,7 +63,6 @@ const DebtList = ({ dispatch, debtList,
                   ref={y => { moneyRefs.push(y); }}
                   onBlur={e => {
                     e.preventDefault();
-                    if (!isFinite(e.target.value)) { console.log(8); }
                   }}
                 />
               </TableRowColumn>
@@ -110,7 +111,7 @@ const DebtList = ({ dispatch, debtList,
       <div className="debt-list">{
         debtList.map(x => (
           <div className={adddebt.debtTable}>
-            <div className={adddebt.debtTitle}> Title:{x.debtName} </div>
+            <div className={adddebt.debtTitle}> {x.debtName} </div>
             <div className={adddebt.debtCreditor}> creditor: {x.creditor} </div>
             <div className={adddebt.debtCreateAt}>
               {x.createdAt.slice(0, 9)} {x.createdAt.slice(11, 16)}
@@ -124,7 +125,7 @@ const DebtList = ({ dispatch, debtList,
               </TableHeader>
               <TableBody displayRowCheckbox={false}>
                 {x.debtorList.map(y => (
-                  <TableRow>
+                  <TableRow selectable={false}>
                     <TableRowColumn>{y.debtor}</TableRowColumn>
                     <TableRowColumn>{y.money}</TableRowColumn>
                   </TableRow>)
@@ -132,7 +133,7 @@ const DebtList = ({ dispatch, debtList,
               </TableBody>
             </Table>
           </div>
-        ))
+        )).reverse()
       }</div>
     </div>
    );

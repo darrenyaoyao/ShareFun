@@ -12,9 +12,9 @@ const User = sequelize.define('user', {
   },
 }, {
   classMethods: {
-    findOneuser: (username) => (
+    findOneuser: (name) => (
       User.findOne({
-        where: { username },
+        where: { username: name },
       })
     ),
   },
