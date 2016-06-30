@@ -35,6 +35,10 @@ const AddGroup = ({ dispatch, groupFriends, username, friendList, groupList, err
             dispatch(errorAddGroup(`${groupName.getValue()} already exists!`));
             return;
           }
+          if (groupFriends.length < 1) {
+            dispatch(errorAddGroup('Join some friends in this group!'));
+            return;
+          }
           dispatch(fetchAddGroup(username, groupName.getValue(), [...groupFriends, username]));
           dispatch(resetGroupFriends());
           groupName.getInputNode().value = '';
