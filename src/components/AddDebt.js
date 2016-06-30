@@ -101,7 +101,7 @@ const DebtList = ({ dispatch, debtList,
           dispatch(fetchAddDebt(username, groupName, {
             creditor: username,
             createdAt:
-             `${now.getFullYear()}-${now.getMonth()}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`,
+             `${now.getFullYear()}-${(now.getMonth()>9)?now.getMonth()+1:'0'+(now.getMonth()+1)}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`,
             debtName: debtName.getValue(),
             debtorList: newDebt,
           }));
