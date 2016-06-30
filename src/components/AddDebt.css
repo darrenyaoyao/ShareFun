@@ -7,13 +7,17 @@
 }
 .debtTitle{
   font-size: 25px;
-  font-family:'Muli';
+  font-family:'Inconsolata';
+  font-weight: bold;
+  font-style: italic;
 }
 .debtCreditor{
   text-align: right;
+  font-style: italic;
 }
 .debtCreateAt{
   text-align: right;
+  font-style: italic;
 }
 .debtTable{
   /*border-top: solid 1px green;*/
