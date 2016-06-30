@@ -123,7 +123,6 @@ router.get('/getGroupList/:username', (req, res) => {
         groups.forEach(x => {
           tmpList.push(x.groupName);
         });
-        console.log(tmpList);
         res.json({ groupList: tmpList });
       });
     }).catch(() => {
