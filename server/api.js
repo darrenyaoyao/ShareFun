@@ -254,14 +254,29 @@ const fakeRepay = [
   { debtor: 'user2', money: 80 },
 ];
 
-function debtslist(groupdebts) {
+function getdebtslist(groupdebts) {
+  console.log("getdebtslist", groupdebts);
   return Promise.map(groupdebts, groupdebt => groupdebt.getDebtDebtors());
 }
 
 function flat(DebtDebtors) {
+  console.log('flat', DebtDebtors);
+  return new Promise((resolve) => {
+    const debt = [];
+    DebtDebtors.forEach(x => {
+      x.forEach(y => {
+        debt.push(y);
+      });
+    });
+    return resolve(debt);
+  });
+}
+
+function flat2(debts) {
+  console.log('flat2', debts);
   return new Promise((resolve) => {
     const list = [];
-    DebtDebtors.forEach(x => {
+    debts.forEach(x => {
       list.push(x);
     });
     return resolve(list);
@@ -269,7 +284,7 @@ function flat(DebtDebtors) {
 }
 
 function debtcount(debtslist) {
-  console.log('debtcount');
+  console.log("debtcount", debtslist);
   return new Promise((resolve) => {
     const debtrelation = {};
     debtslist.forEach(debt => {
@@ -290,27 +305,31 @@ function debtcount(debtslist) {
 
 function debtgreedy(debtrelation) {
   const drelation = debtrelation;
+  console.log("debtrelation", debtrelation);
   return new Promise((resolve) => {
     const repayrelation = [];
-    for (var index in debtrelation) {
-      if (drelation[index] < 0) {
+    for (var index in drelation) {
+      console.log(index, drelation[index]);
+      if (drelation[index] < 0) { //欠錢的人
         for (var i in drelation) {
           if (drelation[i] > 0 && (drelation[index] + drelation[i]) <= 0) {
+            console.log(i, drelation[i]);
             repayrelation.push({
               creditor: i,
               debtor: index,
               money: drelation[i],
             });
-            drelation[i] += drelation[index];
-            drelation[index] = 0;
+            drelation[index] += drelation[i];
+            drelation[i] = 0;
           } else if (drelation[i] > 0 && (drelation[index] + drelation[i]) > 0) {
+            console.log(i, drelation[i]);
             repayrelation.push({
               creditor: i,
               debtor: index,
-              money: -drelation[i],
+              money: -drelation[index],
             });
-            drelation[index] += drelation[i];
-            drelation[i] = 0;
+            drelation[i] += drelation[index];
+            drelation[index] = 0;
           }
         }
       }
@@ -320,6 +339,7 @@ function debtgreedy(debtrelation) {
 }
 
 function addrepay(repayrelations, groupname) {
+  console.log("addrepay", repayrelations);
   return Promise.map(repayrelations,
     repayrelation => GroupRepay.create({
       group: groupname,
@@ -330,6 +350,7 @@ function addrepay(repayrelations, groupname) {
 }
 
 function repayfilter(repayrelations, username) {
+  console.log("repayfilter", repayrelations);
   const userrepay = [];
   repayrelations.forEach(repayrelation => {
     if (repayrelation.creditor === username) {
@@ -350,13 +371,18 @@ function repayfilter(repayrelations, username) {
 router.get('/getGroupRepay/:username&&:groupName', (req, res) => {
   Groups.findOneGroup(req.params.groupName)
     .then(group => group.getGroupDebts())
-    .then(GroupDebts => debtslist(GroupDebts))
-    .then(DebtDebtors => flat(DebtDebtors[0]))
+    .then(GroupDebts => getdebtslist(GroupDebts))
+    .then(DebtDebtors => flat(DebtDebtors))
+    .then(Debts => flat2(Debts))
     .then(Debtlists => debtcount(Debtlists))
     .then(debtrelation => debtgreedy(debtrelation))
     .then(repayrelations => {
       res.json({ groupRepay: repayfilter(repayrelations, req.params.username) });
       return addrepay(repayrelations, req.params.groupName);
+    })
+    .catch(emptylist => {
+      console.log('Group donot have debtslisy', emptylist);
+      res.json({ groupRepay: [] });
     });
 });
 
