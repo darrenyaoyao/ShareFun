@@ -1,7 +1,7 @@
 const friendList = (state = {
   isFetching: false,
   list: [],
-  err: false,
+  err: 0,
 }, action) => {
   switch (action.type) {
     case 'REQUEST_ADD_FRIEND':
@@ -12,7 +12,8 @@ const friendList = (state = {
       return Object.assign({}, state, {
         isFetching: false,
         err: action.err,
-        list: [...state.list, action.friendname],
+        list: (action.err !== 0) ? (state.list) :
+              ([...state.list, action.friendname]),
       });
     case 'REQUEST_GET_FRIEND_LIST':
       return Object.assign({}, state, {

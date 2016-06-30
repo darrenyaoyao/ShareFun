@@ -32,14 +32,25 @@ router.post('/login', (req, res) => {
 
 router.post('/addFriend', (req, res) => {
 	// code for discussion with db
+  if (req.body.username === req.body.friendname) {
+    res.json({ err: 3 });
+    return;
+  }
   Users.findOne({
     where: { username: req.body.friendname },
   }).then((friend) => {
+    if (!friend) {
+      res.json({ err: 1 });
+      return;
+    }
     Friendlinks.create({
       user_1: req.body.friendname,
       user_2: req.body.username,
     }).then((friendlink) => {
       friend.addFriendlink(friendlink);
+      res.json({ err: 0 });
+    }).catch(() => {
+      res.json({ err: 2 });
     });
 
     Friendlinks.create({
@@ -51,10 +62,8 @@ router.post('/addFriend', (req, res) => {
         user.addFriendlink(friendlink);
       });
     });
-
-    res.json({ success: true });
   }).catch(() => {
-    res.json({ success: false });
+    res.json({ err: 2 });
   });
 });
 
