@@ -19,7 +19,7 @@ const DebtList = ({ dispatch, debtList,
         > settle debt </RaisedButton>
       </div>
       <div hidden={repayList.length === 0}>
-        <h3 className={adddebt.fontStyle}> Summay of Debt </h3>
+        <h3 className={adddebt.fontStyle}> Summary of Debts </h3>
         <Table>
           <TableHeader displaySelectAll={false}>
             <TableRow>
