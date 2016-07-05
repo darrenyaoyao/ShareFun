@@ -14,10 +14,12 @@ describe('Server API unit test', () => {
       })
       .expect('Content-Type', /json/)
       .expect(200)
-      .end((err, res) => {
+      .expect((res) => {
         expect(res.status).to.equal(200);
-        expect(res.success).to.be.true;
-        done();
+        expect(res.body.success).to.be.true;
+      })
+      .end((err) => {
+        done(); 
       });
   });
 });
