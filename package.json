@@ -12,6 +12,7 @@
   "dependencies": {
     "babel-polyfill": "^6.9.1",
     "body-parser": "^1.15.1",
+    "chai": "^3.5.0",
     "classnames": "^2.2.5",
     "express": "^4.13.4",
     "extract-text-webpack-plugin": "^1.0.1",

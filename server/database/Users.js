@@ -67,6 +67,11 @@ User.sync().then(() => {
   console.log('Create user table fail: ', err);
 });
 
+User.create({
+  username: 'admin',
+  password: 'admin',
+});
+
 Group.sync().then(() => {
   // Table created
   console.log('Create group table successfully.');
