@@ -20,7 +20,7 @@ export default class Repay extends Component {
   mapToDebtors(groupName, item) {
     const { addRepay, username } = this.props;
     return (
-      <TableRow>
+      <TableRow selectable={false}>
         <TableRowColumn> {item.debtor} </TableRowColumn>
         <TableRowColumn> {item.money} </TableRowColumn>
         <TableRowColumn>
@@ -54,7 +54,7 @@ export default class Repay extends Component {
   render() {
     const { repayList } = this.props;
     return (
-      <Col md={6} className={repayStyle.repayMain}>
+      <Col xs={6} sm={6} md={6} lg={6} className={repayStyle.repayMain}>
         <h2 className={groupStyle.groupHeader}> Repay Interface </h2>
         {repayList.map(this.mapToList.bind(this))}
       </Col>
