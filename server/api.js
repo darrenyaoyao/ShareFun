@@ -15,7 +15,7 @@ const DebtDebtor = require('./database/DebtDebtorLinks');
 // };
 
 router.post('/login', (req, res) => {
-  console.log("correct");
+  console.log('correct');
   // code for discussion with db
   Users.findOneuser(req.body.username)
   .then((user) => {
