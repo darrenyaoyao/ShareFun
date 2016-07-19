@@ -4,28 +4,23 @@ const expect = require('chai').expect;
 
 describe('Server API unit test', () => {
   it('should successfully login with correct account and password', (done) => {
-    request(app)
-      .post('/login')
-      .send({
-        username: 'admin',
-        password: 'admin',
-      })
-      .expect(200)
-      .expect((res) => {
-        console.log('In test1');
-        expect(res.status).to.equal(200);
-        console.log('In test2');
-        expect(res.body.success).to.be.true;
-        console.log('In test3');
-      })
+    const p = new Promise((resolve) => setTimeout(() => resolve(request(app)), 5000));
+
+    p.then((res) =>
+        res.post('/api/login')
+          .send({
+            username: 'admin',
+            password: 'admin',
+          })
+          .expect(200))
       .then((res) => {
-        console.log(res);
+        expect(res.body.success).to.be.true; })
+      .then(() => {
         done();
       })
       .catch((err) => {
-        console.log(err);
+        console.log('in error', err);
         done(err);
       });
-    console.log('Out test');
-  });
+  }).timeout(10000);
 });

@@ -17,7 +17,7 @@ app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
-app.disable('etag');
+//app.disable('etag');
 
 
 // error handlers

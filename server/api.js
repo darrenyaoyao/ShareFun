@@ -10,13 +10,7 @@ const GroupRepay = require('./database/GroupRepay');
 const GroupDebt = require('./database/GroupDebtLinks');
 const DebtDebtor = require('./database/DebtDebtorLinks');
 
-// const log = (inst) => {
-//  console.dir(inst.get());
-// };
-
 router.post('/login', (req, res) => {
-  console.log('correct');
-  // code for discussion with db
   Users.findOneuser(req.body.username)
   .then((user) => {
     if (user.password === req.body.password) {
