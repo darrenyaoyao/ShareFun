@@ -3,9 +3,8 @@ const app = require('../../server/app');
 const expect = require('chai').expect;
 
 describe('Server API unit test', () => {
+  const p = new Promise((resolve) => setTimeout(() => resolve(request(app)), 5000));
   it('should successfully login with correct account and password', (done) => {
-    const p = new Promise((resolve) => setTimeout(() => resolve(request(app)), 5000));
-
     p.then((res) =>
         res.post('/api/login')
           .send({

@@ -63,13 +63,18 @@ User.belongsToMany(Group, {
 User.sync().then(() => {
   // Table created
   console.log('Create user table successfully.');
+  User.findOrCreate({
+    where: {
+      username: 'admin',
+      password: 'admin',
+    },
+    default: {
+      username: 'admin',
+      password: 'admin',
+    },
+  });
 }).catch((err) => {
   console.log('Create user table fail: ', err);
-});
-
-User.create({
-  username: 'admin',
-  password: 'admin',
 });
 
 Group.sync().then(() => {
