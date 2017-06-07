@@ -1,2 +1,2 @@
 # ShareFun
-Ric final hackthon :smile:
+Ric final hackthon 😀
